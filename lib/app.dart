@@ -1,3 +1,4 @@
+import 'package:felicitime/features/capsules/data/capsule_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -19,6 +20,7 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
 
+    ref.watch(capsuleRepositoryProvider);
     AsyncValue theme = ref.watch(watchThemeProvider);
     final GoRouter router = ref.watch(routerProvider);
 

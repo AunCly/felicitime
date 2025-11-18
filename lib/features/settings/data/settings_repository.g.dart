@@ -22,8 +22,6 @@ final settingsRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef SettingsRepositoryRef = AutoDisposeProviderRef<SettingsRepository>;
 String _$watchThemeHash() => r'e1246035764322051b454a2bf26ff83c196cbe03';
 
@@ -38,8 +36,6 @@ final watchThemeProvider = AutoDisposeStreamProvider<String>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef WatchThemeRef = AutoDisposeStreamProviderRef<String>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

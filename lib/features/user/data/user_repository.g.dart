@@ -20,8 +20,6 @@ final userRepositoryProvider = AutoDisposeProvider<UserRepository>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef UserRepositoryRef = AutoDisposeProviderRef<UserRepository>;
 String _$userStateChangesHash() => r'b2f18a11cd59f7f5fc83c4d8f67ad093323bf822';
 
@@ -37,8 +35,6 @@ final userStateChangesProvider = AutoDisposeStreamProvider<User?>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef UserStateChangesRef = AutoDisposeStreamProviderRef<User?>;
 String _$getMeHash() => r'c7dbaa27611207e382a3428e36bc9f921285f5c1';
 
@@ -53,8 +49,6 @@ final getMeProvider = AutoDisposeFutureProvider<User>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef GetMeRef = AutoDisposeFutureProviderRef<User>;
 String _$getMeTestHash() => r'1b1b76a87334fe433b527ffcc86859b451761e07';
 
@@ -69,8 +63,6 @@ final getMeTestProvider = AutoDisposeProvider<User?>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef GetMeTestRef = AutoDisposeProviderRef<User?>;
 String _$removeMeHash() => r'985931df89271cbcb1644313e64eec7b94531d5b';
 
@@ -85,8 +77,6 @@ final removeMeProvider = AutoDisposeFutureProvider<void>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef RemoveMeRef = AutoDisposeFutureProviderRef<void>;
 String _$getMeStreamHash() => r'cbc5fc96174fac4bfe762d07dfd9f31b021c4a9e';
 
@@ -101,8 +91,6 @@ final getMeStreamProvider = AutoDisposeStreamProvider<User?>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef GetMeStreamRef = AutoDisposeStreamProviderRef<User?>;
 String _$getAdvancedModeEnabledHash() =>
     r'854c394c8390eb56ce69e941f9ad7f8d35238fdc';
@@ -120,8 +108,6 @@ final getAdvancedModeEnabledProvider =
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef GetAdvancedModeEnabledRef = AutoDisposeStreamProviderRef<bool?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

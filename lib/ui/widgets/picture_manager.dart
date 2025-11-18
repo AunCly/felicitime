@@ -20,8 +20,6 @@ class MediaManager extends ConsumerStatefulWidget {
   const MediaManager({
     super.key,
     required this.medias,
-    required this.toDeleteMedias,
-    required this.toUploadMedias,
     required this.title,
     this.canEdit = true,
     this.canChoose = true,
@@ -35,8 +33,6 @@ class MediaManager extends ConsumerStatefulWidget {
 
   final String title;
   final List<MediaModel> medias;
-  final List<int> toDeleteMedias;
-  final List<MediaModel> toUploadMedias;
   final bool canEdit;
   final bool canChoose;
   final bool canChooseMultiple;
@@ -106,8 +102,6 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
 
     var cameraStatus = await Permission.camera.status;
 
-    print('Camera permission status: ${cameraStatus}');
-
     setState(() {
       cameraPermission = cameraStatus.isPermanentlyDenied || cameraStatus.isDenied ? false : true;
     });
@@ -157,15 +151,14 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
     bool? syncImagesEnabled = ref.read(sharedPreferencesProvider).getBool('syncImages');
     if(syncImagesEnabled != null && syncImagesEnabled == true){
       try {
-        await Gal.putImage(image.path, album: 'Eloyot');
+        await Gal.putImage(image.path, album: 'Félicitime');
       } on GalException catch (e) {
         print(e.type.message);
       }
     }
 
     setState(() {
-      widget.medias.add(MediaModel.fromPath(image.path));
-      widget.toUploadMedias.add(MediaModel.fromPath(image.path));
+      widget.medias.add(MediaModel(path: image.path));
     });
 
   }
@@ -186,8 +179,7 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
             _showVerificationSnackBar(context, 'Vous avez atteint le nombre maximum de photos');
             return;
           }
-          widget.medias.add(MediaModel.fromPath(images[i].path));
-          widget.toUploadMedias.add(MediaModel.fromPath(images[i].path));
+          widget.medias.add(MediaModel(path: images[i].path));
         }
       });
 
@@ -199,35 +191,11 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
       if(image == null) return;
 
       setState(() {
-        widget.medias.add(MediaModel.fromPath(image.path));
-        widget.toUploadMedias.add(MediaModel.fromPath(image.path));
+        widget.medias.add(MediaModel(path: image.path));
       });
 
       if (context.mounted) context.pop();
     }
-  }
-
-  void _pickDocument(BuildContext context, {multiple = true}) async {
-
-    if(!_verifyMaxLimitation()){
-      _showVerificationSnackBar(context, 'Vous avez atteint le nombre maximum de photos');
-      return;
-    }
-
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      File file = File(result.files.single.path!);
-
-      setState(() {
-        widget.medias.add(MediaModel.fromPath(file.path));
-        widget.toUploadMedias.add(MediaModel.fromPath(file.path));
-      });
-
-      if (context.mounted) context.pop();
-
-    }
-
   }
 
   _showMediaSrcDialog(){
@@ -267,12 +235,6 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
                   text: 'Choisir une photo',
                   icon: FontAwesomeIcons.image,
                   onPressed: () => _pickImage(context, multiple: widget.canChooseMultiple),
-                ),
-                if(widget.canChooseMedia) gapHNormal,
-                if(widget.canChooseMedia) AppButton(
-                  text: 'Choisir un document',
-                  icon: FontAwesomeIcons.file,
-                  onPressed: () => _pickDocument(context, multiple: widget.canChooseMedia),
                 ),
               ],
             ),
@@ -346,11 +308,7 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
                             return;
                           }
                           setState(() {
-                            if(media.isHttp){
-                              widget.toDeleteMedias.add(media.id);
-                            }
                             widget.medias.remove(media);
-                            widget.toUploadMedias.removeWhere((element) => element.url == media.url);
                           });
                         }),
                       if(widget.canAdd && widget.medias.length < widget.max) GestureDetector(
@@ -375,7 +333,7 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
           ),
           child: Column(
             children: [
-              Text('La caméra pour l\'application Ludovik est désactivée.\n\Ludovik est une application de diagnostic photo, sans permission vous ne pourrez pas aller plus loin. Activez la pour permettre à l\'application de prendre des photos', style: Theme.of(context).textTheme.bodyMedium),
+              Text('La caméra pour l\'application Félicitime est désactivée.\n\Sans permission vous ne pourrez pas ajouter de photos.', style: Theme.of(context).textTheme.bodyMedium),
               TextButton(onPressed: () => openAppSettings(), child: Text('Ouvrir les paramètres de l\'application', style: Theme.of(context).textTheme.bodyMedium)),
             ],
           ),

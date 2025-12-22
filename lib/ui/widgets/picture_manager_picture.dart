@@ -71,7 +71,7 @@ class _MediaManagerMediaState extends State<MediaManagerMedia> {
               width: 30,
               height: 30,
               decoration: BoxDecoration(
-                color: AppColors.appPrimary,
+                color: AppColors.appPurple,
                 borderRadius: BorderRadius.circular(50),
               ),
               child: IconButton(

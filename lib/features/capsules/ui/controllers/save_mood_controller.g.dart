@@ -7,7 +7,7 @@ part of 'save_mood_controller.dart';
 // **************************************************************************
 
 String _$saveMoodControllerHash() =>
-    r'c0f49fac307dc565314412eeb0ff7bb719fe2305';
+    r'daca4fa731128897dba7cd51618069836ec010ce';
 
 /// See also [SaveMoodController].
 @ProviderFor(SaveMoodController)

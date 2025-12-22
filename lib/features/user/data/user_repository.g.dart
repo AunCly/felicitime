@@ -36,6 +36,21 @@ final userStateChangesProvider = AutoDisposeStreamProvider<User?>.internal(
 );
 
 typedef UserStateChangesRef = AutoDisposeStreamProviderRef<User?>;
+String _$settingsStreamHash() => r'd3d96ca2ec59075818aee9f5556621c69034cf33';
+
+/// See also [settingsStream].
+@ProviderFor(settingsStream)
+final settingsStreamProvider = AutoDisposeStreamProvider<Map>.internal(
+  settingsStream,
+  name: r'settingsStreamProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$settingsStreamHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SettingsStreamRef = AutoDisposeStreamProviderRef<Map>;
 String _$getMeHash() => r'c7dbaa27611207e382a3428e36bc9f921285f5c1';
 
 /// See also [getMe].

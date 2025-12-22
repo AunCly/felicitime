@@ -6,23 +6,27 @@ class Moment {
   Capsule capsule;
   DateTime createdAt;
   List<MediaModel> medias;
+  String? comment;
 
   Moment({
     required this.capsule,
     required this.createdAt,
     required this.medias,
+    this.comment,
   });
 
   factory Moment.fromJson(json) => Moment(
     capsule: Capsule.fromJson(json["capsule"]),
     createdAt: DateTime.parse(json["created_at"]),
     medias: List<MediaModel>.from(json["medias"].map((x) => MediaModel.fromJson(x))),
+    comment: json["comment"],
   );
 
   Map<String, dynamic> toJson() => {
     "capsule": capsule.toJson(),
     "created_at": createdAt.toIso8601String(),
     "medias": List<dynamic>.from(medias.map((x) => x.toJson())),
+    "comment": comment,
   };
 
   @override

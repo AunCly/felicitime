@@ -14,14 +14,22 @@ class UserRepository {
   final _user = InMemoryStore<User?>(null);
   final _syncImages = InMemoryStore<bool>(false);
   final _advancedModeEnabled = InMemoryStore<bool?>(null);
+  final _settings = InMemoryStore<Map>({});
 
-  UserRepository({required this.ref});
+  UserRepository({required this.ref}){
+    Map settings = {
+      'family_n_friend': ref.read(sharedPreferencesProvider).getString('family_n_friend') ?? '',
+      'money': ref.read(sharedPreferencesProvider).getString('money') ?? '',
+    };
+    _settings.value = settings;
+  }
 
   User? get currentUser => _user.value;
   Stream<User?> userStateChanges() => _user.stream;
   Stream<bool> syncImagesSetting() => _syncImages.stream;
   Stream<bool?> advancedModeEnabled() => _advancedModeEnabled.stream;
   Stream<User?> meStream() => _user.stream;
+  Stream<Map> settingsStream() => _settings.stream;
 
   Future<User> getMe() async {
     if(_user.value != null){
@@ -34,6 +42,15 @@ class UserRepository {
 
   Future<void> removeMe() async {
     _user.value = null;
+  }
+
+  Future<void> setSettings(String key, dynamic value) async {
+    ref.read(sharedPreferencesProvider).setString(key, value);
+    _settings.value = {
+      ..._settings.value,
+      key: value,
+    };
+    print(_settings.value);
   }
 
   Future<void> resetTutorial() async {
@@ -74,6 +91,12 @@ Stream<User?> userStateChanges(Ref ref) {
 }
 
 @riverpod
+Stream<Map> settingsStream(Ref ref) {
+  final userRepository = ref.watch(userRepositoryProvider);
+  return userRepository.settingsStream();
+}
+
+@riverpod
 Future<User> getMe(Ref ref){
   final userRepository = ref.read(userRepositoryProvider);
   return userRepository.getMe();
@@ -96,7 +119,6 @@ Stream<User?> getMeStream(Ref ref){
   final userRepository = ref.read(userRepositoryProvider);
   return userRepository.meStream();
 }
-
 
 @riverpod
 Stream<bool?> getAdvancedModeEnabled(Ref ref){

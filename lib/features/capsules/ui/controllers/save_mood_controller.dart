@@ -12,9 +12,9 @@ class SaveMoodController extends _$SaveMoodController{
 
   }
 
-  Future<bool> saveMood({required int mood}) async {
+  Future<bool> saveMood({required int mood, DateTime? date}) async {
     state = const AsyncLoading();
-    state = await AsyncValue.guard(() => ref.read(capsuleRepositoryProvider).saveMood(moodValue: mood));
+    state = await AsyncValue.guard(() => ref.read(capsuleRepositoryProvider).saveMood(moodValue: mood, date: date));
     return state.hasError == false;
   }
 

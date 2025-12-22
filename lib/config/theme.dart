@@ -18,21 +18,21 @@ class AppTheme {
 
   static final light = ThemeData(
     colorScheme: ColorScheme.fromSeed(
-      seedColor: const Color(0xFFA8D0E6),
+      seedColor: const Color(0xFFbeaffc),
 
-      primary: AppColors.appPrimary,
+      primary: AppColors.appPurple,
       onPrimary: AppColors.appWhite,
 
-      secondary: AppColors.appSecondary,
-      onSecondary: AppColors.appSurface,
+      secondary: AppColors.appOrange,
+      onSecondary: AppColors.appWhite,
 
       surface: AppColors.appWhite,
-      inverseSurface: const Color(0xFF2E2E2E),
+      inverseSurface: AppColors.appGrey,
 
       shadow: AppColors.appBlack,
     ),
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColors.appSurface,
+    scaffoldBackgroundColor: AppColors.appGrey,
     textTheme: TextTheme(
       displayLarge: GoogleFonts.outfit(fontSize: 57, fontWeight: FontWeight.normal),
       displayMedium: GoogleFonts.outfit(fontSize: 45, fontWeight: FontWeight.normal),
@@ -52,11 +52,11 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF7eba94),
-        foregroundColor: AppColors.appBlack,
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: AppColors.appBlack, width: 2),
+        elevation: 0,
+        backgroundColor: AppColors.appOrange,
+        foregroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     ),

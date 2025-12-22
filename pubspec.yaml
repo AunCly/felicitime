@@ -88,6 +88,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - .env
+    - images/felicitime-1.png
+    - images/felicitime-2.png
+    - images/felicitime-3.png
+    - images/felicitime-4.png
+    - images/felicitime-5.png
+    - images/felicitime-6.png
+    - images/felicitime-7.png
+    - images/felicitime-8.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

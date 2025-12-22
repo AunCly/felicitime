@@ -1,3 +1,7 @@
+import 'package:felicitime/features/capsules/ui/screens/capsules.dart';
+import 'package:felicitime/features/moments/ui/screens/moments.dart';
+import 'package:felicitime/features/moods/ui/screens/moods.dart';
+import 'package:felicitime/features/settings/ui/screens/settings.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +26,27 @@ GoRouter router(Ref ref) {
         },
       ),
       GoRoute(
-        path: Routes.profile,
+        path: Routes.capsules,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: ProfileScreen());
+          return const BaseScreen(screen: CapsulesScreen());
+        },
+      ),
+      GoRoute(
+        path: Routes.moods,
+        builder: (BuildContext context, GoRouterState state) {
+          return const BaseScreen(screen: MoodsScreen());
+        },
+      ),
+      GoRoute(
+        path: Routes.moments,
+        builder: (BuildContext context, GoRouterState state) {
+          return const BaseScreen(screen: MomentsScreen());
+        },
+      ),
+      GoRoute(
+        path: Routes.settings,
+        builder: (BuildContext context, GoRouterState state) {
+          return const BaseScreen(screen: SettingsScreen());
         },
       ),
     ],

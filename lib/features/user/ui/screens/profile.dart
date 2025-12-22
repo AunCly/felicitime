@@ -17,14 +17,14 @@ import 'package:felicitime/ui/widgets/card_button.dart';
 import 'package:felicitime/utils/async_value_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class ProfileScreen extends ConsumerStatefulWidget {
-  const ProfileScreen({super.key});
+class YouScreen extends ConsumerStatefulWidget {
+  const YouScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ProfileScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _YouScreenState();
 }
 
-class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+class _YouScreenState extends ConsumerState<YouScreen> {
 
   _deleteAccount(String? confirmation) async {
     if(confirmation == 'SUPPRIMER'){

@@ -21,12 +21,8 @@ class AppContainer extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(padding),
       margin: EdgeInsets.only(top: margin, bottom: margin),
-      decoration: ShapeDecoration(
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(radius),
-          side: BorderSide(color: Theme.of(context).colorScheme.inverseSurface, width: 2),
-        ),
-        color: primaryColor ?? Colors.white,
+      decoration: BoxDecoration(
+        color: primaryColor ?? Theme.of(context).colorScheme.primary.withOpacity(0.2),
       ),
       child: content,
     );

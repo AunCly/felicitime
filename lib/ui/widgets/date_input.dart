@@ -51,7 +51,7 @@ class _AppDateInputState extends State<AppDateInput> {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: widget.error ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.outline, width: 1),
+          border: Border.all(color: widget.error ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.surface, width: 1),
         ),
         child: Row(
           children: [

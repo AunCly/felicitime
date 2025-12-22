@@ -217,7 +217,7 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
                 Text('Ajouter des photos', style: Theme.of(context).textTheme.titleMedium),
                 const Spacer(),
                 IconButton(
-                  icon: const Icon(FontAwesomeIcons.times, color: AppColors.appPrimary),
+                  icon: const Icon(FontAwesomeIcons.times, color: AppColors.appPurple),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],
@@ -256,7 +256,7 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: widget.error ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.shadow, width: 2),
+              border: Border.all(color: widget.error ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.surface, width: 1),
             ),
             child: Column(
               children: [
@@ -264,16 +264,20 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
-                      AppContainer(
-                        primaryColor: Theme.of(context).colorScheme.secondary,
-                        content: Icon(widget.canChooseMedia == true ? FontAwesomeIcons.lightFile : FontAwesomeIcons.lightCamera, color: Theme.of(context).colorScheme.shadow),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Icon(FontAwesomeIcons.lightCamera, color: Theme.of(context).colorScheme.primary)
                       ),
                       gapWNormal,
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: widget.error ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.onSurface)),
+                            Text(widget.title, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: widget.error ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.onSurface)),
                             Row(
                               children: [
                                 if(widget.min > 0) Text('${widget.min} obligatoire, ', style: Theme.of(context).textTheme.bodySmall),
@@ -287,10 +291,9 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).colorScheme.shadow,
-                  thickness: 2,
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                  thickness: 1,
                 ),
-                gapHNormal,
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: GridView.count(
@@ -313,8 +316,12 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
                         }),
                       if(widget.canAdd && widget.medias.length < widget.max) GestureDetector(
                         onTap: _showMediaSrcDialog,
-                        child: const AppContainer(
-                          content: Icon(FontAwesomeIcons.solidPlus, color: AppColors.appPrimary),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                            borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Icon(FontAwesomeIcons.solidPlus, color: AppColors.appPurple),
                         ),
                       ),
                     ]
@@ -328,7 +335,7 @@ class _PictureManagerState extends ConsumerState<MediaManager> with WidgetsBindi
           margin: const EdgeInsets.only(bottom: 20),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: AppColors.appPrimary,
+            color: AppColors.appPurple,
             borderRadius: BorderRadius.circular(5),
           ),
           child: Column(

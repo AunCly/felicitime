@@ -22,12 +22,8 @@ class AppInfoMessage extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.inverseSurface,
-          width: 2,
-        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,7 +32,7 @@ class AppInfoMessage extends StatelessWidget {
             children: [
               Row(
                 children : [
-                  if(icon != null) Icon(icon, color: Theme.of(context).colorScheme.primary, size: 15),
+                  if(icon != null) Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 15),
                   if(icon != null) gapWNormal,
                   Text(title!, style: Theme.of(context).textTheme.titleMedium),
                 ]
@@ -49,7 +45,7 @@ class AppInfoMessage extends StatelessWidget {
               if(title == null) Icon(icon, color: Theme.of(context).colorScheme.primary, size: 15),
               if(title == null) gapWNormal,
               Flexible(
-                child: Text(message, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary))
+                child: Text(message, style: Theme.of(context).textTheme.bodyMedium)
               ),
             ],
           ),

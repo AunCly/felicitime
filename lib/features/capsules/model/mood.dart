@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Mood {
 
@@ -31,17 +32,17 @@ class Mood {
   IconData getIcon() {
     switch (mood) {
       case 1:
-        return Icons.sentiment_very_dissatisfied;
+        return FontAwesomeIcons.lightFaceSadCry;
       case 2:
-        return Icons.sentiment_dissatisfied;
+        return FontAwesomeIcons.lightFaceFrown;
       case 3:
-        return Icons.sentiment_neutral;
+        return FontAwesomeIcons.lightFaceAngry;
       case 4:
-        return Icons.sentiment_satisfied;
+        return FontAwesomeIcons.lightFaceMeh;
       case 5:
-        return Icons.sentiment_very_satisfied;
+        return FontAwesomeIcons.lightFaceSmile;
       default:
-        return Icons.sentiment_neutral;
+        return FontAwesomeIcons.lightFaceLaugh;
     }
   }
 

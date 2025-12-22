@@ -4,6 +4,15 @@ class Capsule {
   String title;
   String description;
   Duration duration;
+
+
+  /// Tags associated with the capsule
+  /// e.g. 'free', 'premium', 'all_price', 'all_seasons', 'spring', 'summer', 'autumn', 'winter', 'all_family', etc.
+  ///
+  /// Family tags: 'all_family', 'yes', 'near', 'no'
+  /// Price tags: 'all_price', 'free', 'little', 'high'
+  /// Season tags: 'all_season', 'spring', 'summer', 'autumn', 'winter'
+  ///
   List<String> tags;
 
   Capsule({
@@ -11,7 +20,7 @@ class Capsule {
     required this.title,
     required this.description,
     required this.duration,
-    required this.tags
+    required this.tags,
   });
 
   factory Capsule.fromJson(json) => Capsule(
@@ -31,6 +40,6 @@ class Capsule {
   };
 
   @override
-  toString() => 'User {id: $id, title: $title, description: $description}';
+  toString() => 'Capsule {id: $id, title: $title}';
 
 }

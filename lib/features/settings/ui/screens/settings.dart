@@ -1,6 +1,7 @@
 import 'package:felicitime/config/theme.dart';
 import 'package:felicitime/features/user/data/user_repository.dart';
 import 'package:felicitime/features/user/ui/controllers/settings_controller.dart';
+import 'package:felicitime/services/notification.dart';
 import 'package:felicitime/ui/widgets/async_value_widget.dart';
 import 'package:felicitime/ui/widgets/back_home.dart';
 import 'package:felicitime/ui/widgets/info_message.dart';
@@ -37,7 +38,31 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
     'month': 'Mensuelle',
   };
 
+  Map notificationOptions = {
+    'on': 'Activée',
+    'off': 'Désactivée',
+  };
+
   void setSetting(String key, value) async {
+    await ref.read(settingsControllerProvider.notifier).setSettings(key, value);
+  }
+
+  void setNotification(String key, value) async {
+    final service = NotificationService();
+    if(value == 'on'){
+      await service.requestPermissions();
+      await service.scheduleDailyMoodNotification();
+      await service.scheduleCapsuleNotification();
+    } else {
+      await service.cancelAll();
+    }
+    await ref.read(settingsControllerProvider.notifier).setSettings(key, value);
+  }
+
+  void setRecurrence(String key, value) async {
+    final service = NotificationService();
+    await service.cancelCapsuleNotification();
+    await service.scheduleCapsuleNotification();
     await ref.read(settingsControllerProvider.notifier).setSettings(key, value);
   }
 
@@ -56,6 +81,44 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
             Text('Vous.', style: Theme.of(context).textTheme.headlineLarge),
             gapHNormal,
             Text('Paramètres personnels', style: Theme.of(context).textTheme.titleMedium),
+            gapHNormal,
+            AsyncValueWidget(
+              value: settings,
+              data: (value) => Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: Column(
+                  children: [
+                    Text('Voulez-vous activer les notifications ?', style: Theme.of(context).textTheme.titleMedium),
+                    gapHNormal,
+                    AppInfoMessage(message: 'Vous recevrez une notification par jour pour le suivi d\'humeur et une notification pour votre capsule selon la réccurence que vous avez défini(e), pas une de plus.',),
+                    gapHNormal,
+                    Column(
+                      children: [
+                        for(var option in const ['on', 'off']) Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: value['notification'] == option ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.inverseSurface,
+                                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: ListTile(
+                                title: Text(notificationOptions[option]),
+                                onTap: () => setNotification('notification', option),
+                              ),
+                            ),
+                            gapHNormal
+                          ],
+                        )
+                      ]
+                    ),
+                  ]
+                )
+              )
+            ),
             gapHNormal,
             AsyncValueWidget(
               value: settings,
@@ -160,7 +223,7 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                               ),
                               child: ListTile(
                                 title: Text(recurrenceOptions[option]),
-                                onTap: () => setSetting('recurrence', option),
+                                onTap: () => setRecurrence('recurrence', option),
                               ),
                             ),
                             gapHNormal,

@@ -20,6 +20,8 @@ class UserRepository {
     Map settings = {
       'family_n_friend': ref.read(sharedPreferencesProvider).getString('family_n_friend') ?? '',
       'money': ref.read(sharedPreferencesProvider).getString('money') ?? '',
+      'notification': ref.read(sharedPreferencesProvider).getString('notification') ?? 'off',
+      'recurrence' : ref.read(sharedPreferencesProvider).getString('recurrence') ?? 'week',
     };
     _settings.value = settings;
   }

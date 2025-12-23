@@ -1,3 +1,4 @@
+import 'package:felicitime/services/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -21,6 +22,11 @@ final packageInfoProvider = Provider<PackageInfo>((ref) {
 Future<void> main() async {
 
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  // 1. Initialiser le service
+  final notificationService = NotificationService();
+  await notificationService.init();
+
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   Intl.defaultLocale = "fr_FR";
   await dotenv.load(fileName: ".env");

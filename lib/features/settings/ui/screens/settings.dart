@@ -7,7 +7,6 @@ import 'package:felicitime/ui/widgets/back_home.dart';
 import 'package:felicitime/ui/widgets/info_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -60,10 +59,11 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
   }
 
   void setRecurrence(String key, value) async {
+    print('value $value');
     final service = NotificationService();
+    await ref.read(settingsControllerProvider.notifier).setSettings(key, value);
     await service.cancelCapsuleNotification();
     await service.scheduleCapsuleNotification();
-    await ref.read(settingsControllerProvider.notifier).setSettings(key, value);
   }
 
   @override
@@ -91,10 +91,11 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Voulez-vous activer les notifications ?', style: Theme.of(context).textTheme.titleMedium),
                     gapHNormal,
-                    AppInfoMessage(message: 'Vous recevrez une notification par jour pour le suivi d\'humeur et une notification pour votre capsule selon la réccurence que vous avez défini(e), pas une de plus.',),
+                    AppInfoMessage(message: 'Vous recevrez une notification par jour pour le suivi d\'humeur et une notification pour votre capsule selon la récurrence que vous avez défini(e), pas une de plus.',),
                     gapHNormal,
                     Column(
                       children: [
@@ -132,7 +133,7 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                   children: [
                     Text('Etes vous entouré (famille, amis proche de chez vous) ?', style: Theme.of(context).textTheme.titleMedium),
                     gapHNormal,
-                    AppInfoMessage(message: 'Ces informations nous permettent de mieux adapter nos suggestions en fonction de votre situation géographique et sociale.',),
+                    AppInfoMessage(message: 'Cette information nous permet de mieux adapter la sélection de vos capsules fonction de votre situation géographique et sociale.'),
                     gapHNormal,
                     Column(
                       children: [
@@ -168,9 +169,9 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                 ),
                 child: Column(
                   children: [
-                    Text('Acceptez vous de dépenser quelques euros pour une capsule ?', style: Theme.of(context).textTheme.titleMedium),
+                    Text('Acceptez-vous de dépenser quelques euros pour une capsule ?', style: Theme.of(context).textTheme.titleMedium),
                     gapHNormal,
-                    AppInfoMessage(message: 'Cette information permettra à l\'application de vous suggérer uniquement des capsules qui correspondent à votre situation financière.',),
+                    AppInfoMessage(message: 'Cette information nous permet de mieux adapter la sélection de vos capsules selon votre situation financière.',),
                     gapHNormal,
                     Column(
                       children: [
@@ -208,9 +209,9 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                 ),
                 child: Column(
                   children: [
-                    Text('A quelle récurrence souhaitez vous vos capsules', style: Theme.of(context).textTheme.titleMedium),
+                    Text('A quelle récurrence souhaitez vous vos capsules ?', style: Theme.of(context).textTheme.titleMedium),
                     gapHNormal,
-                    AppInfoMessage(message: 'Cette information nous permettra de mieux adapter la fréquence d\'envoi des capsules en fonction de vos préférences.',),
+                    AppInfoMessage(message: 'Cette information nous permettra de mieux adapter la fréquence d\'envoi des capsules.',),
                     gapHNormal,
                     Column(
                       children: [

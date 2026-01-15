@@ -1,9 +1,7 @@
 import 'package:felicitime/config/theme.dart';
-import 'package:felicitime/features/capsules/data/capsule_repository.dart';
 import 'package:felicitime/features/capsules/model/capsule.dart';
 import 'package:felicitime/features/capsules/ui/controllers/select_capsule_controller.dart';
 import 'package:felicitime/features/capsules/ui/screens/validate_capsule.dart';
-import 'package:felicitime/ui/widgets/async_value_widget.dart';
 import 'package:felicitime/ui/widgets/button.dart';
 import 'package:felicitime/ui/widgets/dialog.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +61,7 @@ class _CapsuleListTileState extends ConsumerState<CapsuleListTile> {
           gapHNormal,
           Text(widget.capsule.description, style: Theme.of(context).textTheme.bodyMedium),
           gapHNormal,
-          if(widget.canValidate) Row(mainAxisAlignment: MainAxisAlignment.end,
+          if(widget.canValidate && widget.capsule.isValidated == false) Row(mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Spacer(),
               AppButton(
@@ -71,6 +69,14 @@ class _CapsuleListTileState extends ConsumerState<CapsuleListTile> {
                 icon: FontAwesomeIcons.lightImagePolaroid,
                 onPressed: () => showValidationDialog(widget.capsule),
               ),
+            ],
+          ),
+          if(widget.capsule.isValidated) Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(FontAwesomeIcons.solidCircleCheck, color: Theme.of(context).colorScheme.primary, size: 16,),
+              gapWNormal,
+              Text('Capsule validée', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary)),
             ],
           ),
         ]

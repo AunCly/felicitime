@@ -1,4 +1,3 @@
-import 'package:felicitime/main.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,6 +79,8 @@ class NotificationService {
     String? recurrence = prefs.getString('recurrence');
     int recurrenceDays = 7;
 
+    print("Recurrence from prefs: $recurrence");
+
     if(recurrence == 'day'){
       recurrenceDays = 1;
     }
@@ -126,6 +127,10 @@ class NotificationService {
 
     tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, 09, 00, 0);
     scheduledDate = scheduledDate.add(Duration(days: recurrenceDays));
+
+    print("recurrenceDays: $recurrenceDays");
+    print("Now: $now");
+    print("Scheduled Date Capsule: $scheduledDate");
 
     return scheduledDate;
   }

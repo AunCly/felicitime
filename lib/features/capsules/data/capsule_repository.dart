@@ -135,6 +135,13 @@ class CapsuleRepository {
       comment: data['comment'] ?? '',
     );
 
+    _capsules.value = _capsules.value.map((c) {
+      if(c.id == moment.capsule.id){
+        c.isValidated = true;
+      }
+      return c;
+    }).toList();
+
     List<String> moments = ref.read(sharedPreferencesProvider).getStringList('moments') ?? [];
     moments.add(jsonEncode(moment.toJson()));
     ref.read(sharedPreferencesProvider).setStringList('moments', moments);

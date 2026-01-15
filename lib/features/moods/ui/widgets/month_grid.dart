@@ -3,7 +3,6 @@ import 'package:felicitime/features/capsules/model/mood.dart';
 import 'package:felicitime/features/capsules/ui/controllers/save_mood_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MonthGrid extends ConsumerStatefulWidget {
   const MonthGrid({super.key, required this.month, required this.moods});
@@ -46,12 +45,12 @@ class _MonthGridState extends ConsumerState<MonthGrid> {
                     padding: EdgeInsets.zero,
                     children: List.generate(6, (i) {
                       final icon = [
-                        FontAwesomeIcons.lightFaceSadCry,
-                        FontAwesomeIcons.lightFaceFrown,
-                        FontAwesomeIcons.lightFaceAngry,
-                        FontAwesomeIcons.lightFaceMeh,
-                        FontAwesomeIcons.lightFaceSmile,
-                        FontAwesomeIcons.lightFaceLaugh,
+                        Image.asset('images/moods/cry.png'),
+                        Image.asset('images/moods/sad.png'),
+                        Image.asset('images/moods/angry.png'),
+                        Image.asset('images/moods/meh.png'),
+                        Image.asset('images/moods/happy.png'),
+                        Image.asset('images/moods/very-happy.png'),
                       ][i];
                       final moodValue = i + 1;
                       return Material(
@@ -63,7 +62,10 @@ class _MonthGridState extends ConsumerState<MonthGrid> {
                             saveMood(moodValue, DateTime(year, month, day));
                             Navigator.of(context).pop(); // close dialog after selection
                           },
-                          child: Center(child: Icon(icon, size: 40)),
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            child: icon
+                          ),
                         ),
                       );
                     }),
@@ -88,11 +90,11 @@ class _MonthGridState extends ConsumerState<MonthGrid> {
     return null;
   }
 
-  IconData findMoodIconForDay(int year, int month, int day) {
+  Image findMoodIconForDay(int year, int month, int day) {
     Mood? mood = findMoodForDay(year, month, day);
 
     if(mood == null) {
-      return FontAwesomeIcons.lightQuestion;
+      return Image.asset('images/moods/meh.png');
     }
 
     return mood.getIcon();
@@ -119,7 +121,7 @@ class _MonthGridState extends ConsumerState<MonthGrid> {
               child: Center(
                 child: findMoodForDay(widget.month.year, widget.month.month, day) == null ? Text(
                   '$day', style: Theme.of(context).textTheme.bodySmall,
-                ) : Icon(findMoodIconForDay(widget.month.year, widget.month.month, day)),
+                ) : findMoodIconForDay(widget.month.year, widget.month.month, day),
               ),
             ),
           );

@@ -98,6 +98,11 @@ flutter:
     - images/felicitime-6.png
     - images/felicitime-7.png
     - images/felicitime-8.png
+    - images/capsules.png
+    - images/moments.png
+    - images/moods.png
+    - images/settings.png
+    - images/moods/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

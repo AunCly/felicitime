@@ -2,7 +2,6 @@ import 'package:felicitime/features/capsules/ui/controllers/save_mood_controller
 import 'package:felicitime/utils/async_value_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart' show FontAwesomeIcons;
 
 class MoodSelector extends ConsumerStatefulWidget {
   const MoodSelector({super.key});
@@ -38,63 +37,79 @@ class _MoodSelectorState extends ConsumerState<MoodSelector> {
         GestureDetector(
           onTap: () => saveMood(1),
           child: Container(
+            padding: EdgeInsets.all(30),
             width: 50,
             height: 50,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: Icon(FontAwesomeIcons.lightFaceSadCry, size: 50,),
+            child: Image.asset('images/moods/cry.png'),
           )
         ),
         GestureDetector(
           onTap: () => saveMood(2),
           child: Container(
+            padding: EdgeInsets.all(30),
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: const Icon(FontAwesomeIcons.lightFaceFrown, size: 50,),
+            child: Image.asset('images/moods/sad.png'),
           )
         ),
         GestureDetector(
           onTap: () => saveMood(3),
           child: Container(
+            padding: EdgeInsets.all(30),
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: const Icon(FontAwesomeIcons.lightFaceAngry, size: 50,),
+            child: Image.asset('images/moods/angry.png'),
           )
         ),
         GestureDetector(
           onTap: () => saveMood(4),
           child: Container(
+            padding: EdgeInsets.all(30),
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: const Icon(FontAwesomeIcons.lightFaceMeh, size: 50,),
+            child: Image.asset('images/moods/meh.png'),
           )
         ),
         GestureDetector(
           onTap: () => saveMood(5),
           child: Container(
+            padding: EdgeInsets.all(30),
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: const Icon(FontAwesomeIcons.lightFaceSmile, size: 50,),
+            child:  Image.asset('images/moods/happy.png'),
           )
         ),
         GestureDetector(
           onTap: () => saveMood(6),
           child: Container(
+            padding: EdgeInsets.all(30),
+            width: 50,
+            height: 50,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: const Icon(FontAwesomeIcons.lightFaceLaugh, size: 50,),
+            child:  Image.asset('images/moods/very-happy.png'),
           )
         )
       ],

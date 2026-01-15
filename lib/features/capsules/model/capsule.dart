@@ -4,7 +4,7 @@ class Capsule {
   String title;
   String description;
   Duration duration;
-
+  bool isValidated;
 
   /// Tags associated with the capsule
   /// e.g. 'free', 'premium', 'all_price', 'all_seasons', 'spring', 'summer', 'autumn', 'winter', 'all_family', etc.
@@ -21,6 +21,7 @@ class Capsule {
     required this.description,
     required this.duration,
     required this.tags,
+    this.isValidated = false,
   });
 
   factory Capsule.fromJson(json) => Capsule(
@@ -29,6 +30,7 @@ class Capsule {
     description: json["description"],
     duration: Duration(minutes: json["duration_minutes"]),
     tags: List<String>.from(json["tags"].map((x) => x)),
+    isValidated: json["is_validated"] ?? false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,9 +39,10 @@ class Capsule {
     "description": description,
     "duration_minutes": duration.inMinutes,
     "tags": tags,
+    "is_validated": isValidated,
   };
 
   @override
-  toString() => 'Capsule {id: $id, title: $title}';
+  toString() => 'Capsule {id: $id, title: $title, validated: $isValidated}';
 
 }

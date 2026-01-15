@@ -1,5 +1,4 @@
 import 'package:felicitime/ui/widgets/arrow_go.dart';
-import 'package:felicitime/ui/widgets/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:felicitime/config/theme.dart';
@@ -33,7 +32,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     width: double.infinity,
                     height: 250,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: Color(0xFFFFF4EE),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: Stack(
@@ -51,7 +50,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         Positioned(
                           bottom: 10,
                           right: 10,
-                          child: Image.asset('images/felicitime-3.png', width: 175,)
+                          child: Image.asset('images/capsules.png', height : 200,)
                         ),
                       ],
                     ),
@@ -69,7 +68,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       child: Container(
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
+                          color: Color(0xFFFFF4EE),
                           borderRadius: const BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Stack(
@@ -87,7 +86,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             Positioned(
                               bottom: 10,
                               right: 10,
-                              child: Image.asset('images/felicitime-7.png', width: 100,)
+                              child: Image.asset('images/moods.png', width: 100,)
                             ),
                           ],
                         ),
@@ -98,7 +97,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       child: Container(
                         height: 200,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
+                          color: Color(0xFFFFF4EE),
                           borderRadius: const BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Stack(
@@ -116,7 +115,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             Positioned(
                               bottom: 10,
                               right: 10,
-                              child: Image.asset('images/felicitime-1.png', width: 100,)
+                              child: Image.asset('images/settings.png', width: 100,)
                             ),
                           ],
                         ),
@@ -131,7 +130,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     width: double.infinity,
                     height: 250,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: Color(0xFFFFF4EE),
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: Stack(
@@ -149,7 +148,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                         Positioned(
                           bottom: 10,
                           right: 10,
-                          child: Image.asset('images/felicitime-5.png', width: 175,)
+                          child: Image.asset('images/moments.png', width: 175,)
                         ),
                       ],
                     ),

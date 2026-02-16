@@ -1,7 +1,6 @@
 class Routes {
   static const home = '/';
   static const dashboard = '/dashboard';
-  static const newDashboard = '/dashboard/new';
   static const settings = '/settings';
   static const capsules = '/capsules';
   static const moods = '/moods';

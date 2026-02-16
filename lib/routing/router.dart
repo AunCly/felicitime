@@ -11,7 +11,7 @@ import 'package:felicitime/routing/routes.dart';
 import 'package:felicitime/ui/screens/base.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../features/dashboard/ui/screens/new_dashboard.dart';
+import '../features/dashboard/ui/screens/dashboard.dart';
 
 part 'router.g.dart';
 
@@ -24,7 +24,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: Routes.home,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: NewDashboardScreen());
+          return const BaseScreen(screen: DashboardScreen());
         },
       ),
       GoRoute(

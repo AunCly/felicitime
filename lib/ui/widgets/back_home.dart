@@ -17,14 +17,14 @@ class _BackHomeState extends State<BackHome> {
       children: [
         GestureDetector(
           onTap: () => context.pop(),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(FontAwesomeIcons.lightHouse, size: 20),
-              gapWNormal,
-              Text('Retour', style: Theme.of(context).textTheme.titleMedium),
-            ],
-          )
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(FontAwesomeIcons.arrowLeft, size: 20,),
+          ),
         ),
       ]
     );

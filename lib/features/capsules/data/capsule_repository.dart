@@ -181,6 +181,21 @@ class CapsuleRepository {
     _moods.value = moods.map((moodStr) => Mood.fromJson(jsonDecode(moodStr))).toList();
   }
 
+  Future<void> clearAllData() async {
+    // Clear from shared preferences
+    await ref.read(sharedPreferencesProvider).remove('moments');
+    await ref.read(sharedPreferencesProvider).remove('moods');
+    await ref.read(sharedPreferencesProvider).remove('selected_capsules');
+    await ref.read(sharedPreferencesProvider).remove('selected_capsule');
+    await ref.read(sharedPreferencesProvider).remove('selection_date');
+
+    // Clear in-memory stores
+    _moments.value = [];
+    _moods.value = [];
+    _capsules.value = [];
+    _capsule.value = null;
+  }
+
 }
 
 @riverpod

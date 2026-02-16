@@ -32,7 +32,7 @@ class AppTheme {
       shadow: AppColors.appBlack,
     ),
     useMaterial3: true,
-    scaffoldBackgroundColor: AppColors.appWhite,
+    scaffoldBackgroundColor: AppColors.appGrey,
     textTheme: TextTheme(
       displayLarge: GoogleFonts.outfit(fontSize: 57, fontWeight: FontWeight.normal),
       displayMedium: GoogleFonts.outfit(fontSize: 45, fontWeight: FontWeight.normal),

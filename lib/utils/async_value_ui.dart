@@ -17,6 +17,7 @@ extension AsyncValueUI on AsyncValue {
 
   void showSnackBarOnSuccess(BuildContext context, String text){
     if (!isLoading && !hasError) {
+      ScaffoldMessenger.of(context).clearSnackBars();
       showSnackBar(
         context: context,
         title: 'Success'.hardcoded,

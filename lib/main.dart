@@ -1,7 +1,6 @@
 import 'package:felicitime/services/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +28,6 @@ Future<void> main() async {
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   Intl.defaultLocale = "fr_FR";
-  await dotenv.load(fileName: ".env");
 
   final sharedPreferences = await SharedPreferences.getInstance();
   final packageInfo = await PackageInfo.fromPlatform();

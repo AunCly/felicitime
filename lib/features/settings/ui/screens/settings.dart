@@ -1,4 +1,5 @@
 import 'package:felicitime/config/theme.dart';
+import 'package:felicitime/features/capsules/data/capsule_repository.dart';
 import 'package:felicitime/features/user/data/user_repository.dart';
 import 'package:felicitime/features/user/ui/controllers/settings_controller.dart';
 import 'package:felicitime/services/notification.dart';
@@ -7,6 +8,7 @@ import 'package:felicitime/ui/widgets/back_home.dart';
 import 'package:felicitime/ui/widgets/info_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -236,9 +238,95 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                 )
               ),
             ),
+            gapHNormal,
+            Text('Données.', style: Theme.of(context).textTheme.titleMedium),
+            gapHNormal,
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Supprimer toutes les données', style: Theme.of(context).textTheme.titleMedium),
+                  gapHNormal,
+                  AppInfoMessage(message: 'Cette action supprimera définitivement toutes vos capsules et moments enregistrés. Cette action est irréversible.'),
+                  gapHNormal,
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => _showDeleteConfirmationDialog(context),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(FontAwesomeIcons.trash, color: Theme.of(context).colorScheme.surface, size: 15),
+                          gapWNormal,
+                          Text('Supprimer toutes les données', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.surface)),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ]
         )
       )
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Text('Confirmer la suppression', style: Theme.of(context).textTheme.titleLarge),
+          content: Text(
+            'Êtes-vous sûr de vouloir supprimer toutes vos capsules et moments ? Cette action est irréversible.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          actions: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Annuler', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary)),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await ref.read(capsuleRepositoryProvider).clearAllData();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      content: Text('Toutes les données ont été supprimées.', style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                  );
+                }
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(FontAwesomeIcons.trash, color: Theme.of(context).colorScheme.surface, size: 15),
+                  gapWNormal,
+                  Text('Supprimer', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.surface)),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

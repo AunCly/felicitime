@@ -12,10 +12,10 @@ class AppArrowGo extends StatelessWidget {
       angle: -math.pi / 4,
       child: Container(
         padding: EdgeInsets.all(2),
-        width: 20,
-        height: 20,
+        width: 30,
+        height: 30,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.inverseSurface,
+          color: Theme.of(context).colorScheme.surface,
           shape: BoxShape.circle,
         ),
         child: Icon(FontAwesomeIcons.arrowRight, size: 10,)

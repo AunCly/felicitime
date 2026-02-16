@@ -13,6 +13,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../ui/widgets/back_home.dart';
+
 class CapsulesScreen extends ConsumerStatefulWidget {
   const CapsulesScreen({super.key});
 
@@ -45,21 +47,7 @@ class _CapsulesScreenState extends ConsumerState<CapsulesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () => context.pop(),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Icon(FontAwesomeIcons.lightHouse, size: 20),
-                      gapWNormal,
-                      Text('Retour', style: Theme.of(context).textTheme.titleMedium),
-                    ],
-                  )
-                ),
-              ]
-            ),
+            BackHome(),
             Text('Capsules.', style: Theme.of(context).textTheme.headlineLarge),
             gapHNormal,
             Text('Vos capsules en cours', style: Theme.of(context).textTheme.titleMedium),

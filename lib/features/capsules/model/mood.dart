@@ -31,17 +31,17 @@ class Mood {
   Image getIcon() {
     switch (mood) {
       case 1:
-        return Image.asset('images/moods/cry.png');
+        return Image.asset('images/moods/cry.png', width: 30);
       case 2:
-        return Image.asset('images/moods/sad.png');
+        return Image.asset('images/moods/sad.png', width: 30);
       case 3:
-        return Image.asset('images/moods/angry.png');
+        return Image.asset('images/moods/angry.png', width: 30);
       case 4:
-        return Image.asset('images/moods/meh.png');
+        return Image.asset('images/moods/meh.png', width: 30);
       case 5:
-        return Image.asset('images/moods/happy.png');
+        return Image.asset('images/moods/happy.png', width: 30);
       default:
-        return Image.asset('images/moods/very-happy.png');
+        return Image.asset('images/moods/very-happy.png', width: 30);
     }
   }
 

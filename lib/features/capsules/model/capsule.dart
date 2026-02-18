@@ -43,6 +43,6 @@ class Capsule {
   };
 
   @override
-  toString() => 'Capsule {id: $id, title: $title, validated: $isValidated}';
+  toString() => 'Capsule {id: $id, title: $title, validated: $isValidated, tags: $tags}';
 
 }

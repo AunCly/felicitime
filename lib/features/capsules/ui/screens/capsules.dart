@@ -69,7 +69,7 @@ class _CapsulesScreenState extends ConsumerState<CapsulesScreen> {
             AppLoadingButton(
               state: state,
               label: 'Relancer la sélection',
-              icon: Icons.add_circle_outline,
+              icon: FontAwesomeIcons.lightRotate,
               onPressed: () => selectCapsules(),
             ),
           ]

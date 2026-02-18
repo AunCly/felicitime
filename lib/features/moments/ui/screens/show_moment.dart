@@ -15,20 +15,17 @@ class ShowMoment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(moment);
-
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Add your moment display widgets here
-            Text('La Capsule associée à ce moment :', style: Theme.of(context).textTheme.titleMedium,),
+            Text('La capsule associée à ce moment :', style: Theme.of(context).textTheme.titleMedium,),
             gapHNormal,
             CapsuleListTile(capsule: moment.capsule, canValidate: false,),
             gapHNormal,
-            Text('Votre moment enregistré le ${DateFormat('dd/mm/yyyy').format(moment.createdAt)}', style: Theme.of(context).textTheme.titleMedium,),
+            Text('Votre moment enregistré le ${DateFormat('dd/MM/yyyy').format(moment.createdAt)}', style: Theme.of(context).textTheme.titleMedium,),
             gapHNormal,
             GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ImagesGalleryDetails(images: moment.medias))),
@@ -47,7 +44,7 @@ class ShowMoment extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Positioned(
+                    if(moment.medias.length > 1) Positioned(
                       bottom: 10,
                       right: 10,
                       child: Container(
@@ -63,7 +60,7 @@ class ShowMoment extends StatelessWidget {
                 )
               ),
             ),
-            if(moment.comment != null) Column(
+            if(moment.comment != '') Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 gapHNormal,

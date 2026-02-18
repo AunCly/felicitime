@@ -32,25 +32,29 @@ class _MoodGridState extends ConsumerState<MoodGrid> {
     12: 'Décembre',
   };
 
-  monthListFromStart(){
+  List<DateTime> monthsWithMoods(){
+    final Set<String> monthKeys = {};
+    for (var mood in widget.moods) {
+      monthKeys.add('${mood.createdAt.year}-${mood.createdAt.month}');
+    }
+
     List<DateTime> months = [];
     DateTime current = DateTime(startMonth.year, startMonth.month);
     while (current.isBefore(DateTime(today.year, today.month + 1))) {
-      months.add(current);
+      if (monthKeys.contains('${current.year}-${current.month}')) {
+        months.add(current);
+      }
       current = DateTime(current.year, current.month + 1);
     }
 
-    // reverse the list to have the most recent month first
-    months = months.reversed.toList();
-
-    return months;
+    return months.reversed.toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        for(var month in monthListFromStart()) Column(
+        for(var month in monthsWithMoods()) Column(
           children: [
             Container(
               padding: EdgeInsets.all(10),

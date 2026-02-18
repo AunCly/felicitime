@@ -2,6 +2,7 @@ import 'package:felicitime/config/theme.dart';
 import 'package:felicitime/features/capsules/data/capsule_repository.dart';
 import 'package:felicitime/features/user/data/user_repository.dart';
 import 'package:felicitime/features/user/ui/controllers/settings_controller.dart';
+import 'package:felicitime/main.dart';
 import 'package:felicitime/services/notification.dart';
 import 'package:felicitime/ui/widgets/async_value_widget.dart';
 import 'package:felicitime/ui/widgets/back_home.dart';
@@ -20,17 +21,17 @@ class SettingsScreen extends ConsumerStatefulWidget {
 class _SettingsScreensState extends ConsumerState<SettingsScreen> {
 
   Map familyOptions = {
-    'yes': 'Oui',
-    'near': 'Oui a quelques minutes',
-    'no': 'Non',
-    'all_family': 'Ne souhaite pas répondre',
+    'family_yes': 'Oui',
+    'family_near': 'Oui a quelques minutes',
+    'family_no': 'Non',
+    'family_all': 'Ne souhaite pas répondre',
   };
 
   Map priceOptions = {
-    'yes': 'Oui',
-    'low': 'Quelques euros',
-    'free': 'Non',
-    'all_price': 'Ne souhaite pas répondre',
+    'price_high': 'Oui',
+    'price_little': 'Quelques euros',
+    'price_free': 'Non',
+    'price_all': 'Ne souhaite pas répondre',
   };
 
   Map recurrenceOptions = {
@@ -139,7 +140,7 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                     gapHNormal,
                     Column(
                       children: [
-                        for(var option in const ['yes', 'near', 'no', 'all_family']) Column(
+                        for(var option in const ['family_yes', 'family_near', 'family_no', 'family_all']) Column(
                           children: [
                             Container(
                               decoration: BoxDecoration(
@@ -177,7 +178,7 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                     gapHNormal,
                     Column(
                       children: [
-                        for (var option in const ['yes', 'low', 'free', 'all_price']) Column(
+                        for (var option in const ['price_free', 'price_little', 'price_high', 'price_all']) Column(
                           children: [
                             Container(
                               decoration: BoxDecoration(
@@ -271,6 +272,25 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                 ],
               ),
             ),
+            gapHNormal,
+            ElevatedButton(
+              onPressed: () async {
+                print('clear moments');
+                await ref.read(sharedPreferencesProvider).setStringList('moments', []);
+                SnackBar(
+                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  content: Text('Tous les moments ont été supprimés.', style: Theme.of(context).textTheme.bodyMedium),
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(FontAwesomeIcons.trash, color: Theme.of(context).colorScheme.surface, size: 15),
+                  gapWNormal,
+                  Text('Supprimer les capsules', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.surface)),
+                ],
+              ),
+            )
           ]
         )
       )

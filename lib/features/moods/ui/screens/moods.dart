@@ -30,10 +30,6 @@ class _MoodsScreenState extends ConsumerState<MoodsScreen> {
             BackHome(),
             Text('Humeurs.', style: Theme.of(context).textTheme.headlineLarge),
             gapHNormal,
-            Text('Humeur du jour.', style: Theme.of(context).textTheme.titleMedium),
-            gapHNormal,
-            MoodSelector(),
-            gapHNormal,
             Text('Historique d\'humeur.', style: Theme.of(context).textTheme.titleMedium),
             gapHNormal,
             AsyncValueWidget(

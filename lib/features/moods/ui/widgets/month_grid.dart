@@ -102,31 +102,47 @@ class _MonthGridState extends ConsumerState<MonthGrid> {
 
   @override
   Widget build(BuildContext context) {
+    final dayLabels = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+    final firstWeekday = DateTime(widget.month.year, widget.month.month, 1).weekday; // 1=Monday
+    final daysInMonth = DateTime(widget.month.year, widget.month.month + 1, 0).day;
+    final offset = firstWeekday - 1; // empty cells before the 1st
+
     return GridView.count(
       crossAxisCount: 7,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
-      children: List.generate(
-        DateTime(widget.month.year, widget.month.month + 1, 0).day,
-        (index) {
-          final day = index + 1;
-          return GestureDetector(
-            onTap: () => saveDayMood(widget.month.year, widget.month.month, day),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+      children: [
+        // Header row with day letters
+        for (var label in dayLabels)
+          Center(
+            child: Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold)),
+          ),
+        // Empty cells to align the 1st day to the correct column
+        for (var i = 0; i < offset; i++)
+          const SizedBox.shrink(),
+        // Day cells
+        ...List.generate(
+          daysInMonth,
+          (index) {
+            final day = index + 1;
+            return GestureDetector(
+              onTap: () => saveDayMood(widget.month.year, widget.month.month, day),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: findMoodForDay(widget.month.year, widget.month.month, day) == null ? Text(
+                    '$day', style: Theme.of(context).textTheme.bodySmall,
+                  ) : findMoodIconForDay(widget.month.year, widget.month.month, day),
+                ),
               ),
-              child: Center(
-                child: findMoodForDay(widget.month.year, widget.month.month, day) == null ? Text(
-                  '$day', style: Theme.of(context).textTheme.bodySmall,
-                ) : findMoodIconForDay(widget.month.year, widget.month.month, day),
-              ),
-            ),
-          );
-        },
-      ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

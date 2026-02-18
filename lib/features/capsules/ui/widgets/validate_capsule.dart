@@ -116,17 +116,11 @@ class _ValidateCapsuleWidgetState extends ConsumerState<ValidateCapsuleWidget> {
             },
           ),
           gapHNormal,
-          Row(
-            children: [
-              Expanded(
-                child: AppLoadingButton(
-                  label: 'Valider la capsule',
-                  icon: FontAwesomeIcons.lightPlus,
-                  state: state,
-                  onPressed: validateCapsule,
-                )
-              )
-            ],
+          AppLoadingButton(
+            label: 'Valider la capsule',
+            icon: FontAwesomeIcons.lightPlus,
+            state: state,
+            onPressed: validateCapsule,
           ),
           gapHNormal,
         ],

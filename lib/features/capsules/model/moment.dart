@@ -15,15 +15,15 @@ class Moment {
     this.comment,
   });
 
-  factory Moment.fromJson(json) => Moment(
-    capsule: Capsule.fromJson(json["capsule"]),
+  factory Moment.fromJson(json, capsule) => Moment(
+    capsule: capsule,
     createdAt: DateTime.parse(json["created_at"]),
     medias: List<MediaModel>.from(json["medias"].map((x) => MediaModel.fromJson(x))),
     comment: json["comment"],
   );
 
   Map<String, dynamic> toJson() => {
-    "capsule": capsule.toJson(),
+    "capsule_id": capsule.id,
     "created_at": createdAt.toIso8601String(),
     "medias": List<dynamic>.from(medias.map((x) => x.toJson())),
     "comment": comment,

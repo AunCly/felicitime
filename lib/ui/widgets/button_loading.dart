@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:felicitime/config/colors.dart';
 
+import '../../config/theme.dart';
+
 class AppLoadingButton extends StatefulWidget {
   final Function? onPressed;
   final String? label;
@@ -39,9 +41,10 @@ class _AppLoadingButtonState extends State<AppLoadingButton> {
       child: widget.state.isLoading ? const SizedBox(width: 15, height: 15, child: CircularProgressIndicator(color: AppColors.appWhite, strokeWidth: 2,)) : Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(widget.disabled ? FontAwesomeIcons.lightAlarmClock : widget.icon, size: 15, color : Theme.of(context).colorScheme.onPrimary),
-          if(widget.label != null) const SizedBox(width: 10),
+          if(widget.label != null) gapWNormal,
           if(widget.label != null) Text(widget.label!, style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
         ]
       )

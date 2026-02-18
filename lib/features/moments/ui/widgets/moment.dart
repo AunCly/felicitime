@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:felicitime/config/theme.dart';
 import 'package:felicitime/features/capsules/model/moment.dart';
@@ -8,6 +9,8 @@ import 'package:felicitime/ui/widgets/images_gallery_details.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../config/colors.dart';
 
 class AppMoments extends StatelessWidget {
   const AppMoments({super.key, required this.moments});
@@ -21,8 +24,8 @@ class AppMoments extends StatelessWidget {
       pageBuilder: (context, anim1, anim2) {
         return Dialog.fullscreen(
           child: AppDialog(
-              title: 'Moment',
-              content: ShowMoment(moment: moment)
+            title: 'Moment',
+            content: ShowMoment(moment: moment)
           ),
         );
       },
@@ -38,77 +41,112 @@ class AppMoments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 20.0,
       children: [
-        for (Moment moment in moments)
-          Column(
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Column(
             children: [
               GestureDetector(
-                onTap: () => showMomentDialog(context, moment),
+                onTap: () => showMomentDialog(context, moments.first),
                 child: Container(
-                  height: 350,
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
                     image: DecorationImage(
-                      image: FileImage(
-                        File(moment.medias.first.path),
-                      ),
+                      image: FileImage(File(moments.first.medias.first.path)),
                       fit: BoxFit.cover,
-                    ),
+                    )
                   ),
+                  height: 250,
+                  width: double.infinity,
                   child: Stack(
                     children: [
                       Positioned(
                         top: 10,
-                        right: 10,
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface.withOpacity(0.8),
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(FontAwesomeIcons.lightImage, size: 16, color: Theme.of(context).colorScheme.onSurface,),
-                              const SizedBox(width: 5,),
-                              Text(
-                                moment.medias.length.toString(),
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.onSurface,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 10,
                         left: 10,
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface.withOpacity(0.8),
-                            borderRadius: const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: Text(
-                            DateFormat('dd/MM/yyyy').format(moment.createdAt),
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).colorScheme.onSurface,
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
+                              ),
+                              child: Icon(FontAwesomeIcons.solidAngleLeft, size: 16, color: Theme.of(context).colorScheme.onSurface),
                             ),
-                          ),
-                        ),
+                            gapWNormal,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Enregistré le : ', style: Theme.of(context).textTheme.bodyMedium),
+                                Text(DateFormat('dd/MM/yyyy').format(moments.first.createdAt), style: Theme.of(context).textTheme.titleSmall),
+                              ]
+                            )
+                          ]
+                        )
                       ),
-                    ]
-                  )
+                    ],
+                  ),
                 ),
               ),
-              gapHNormal,
+              gapHLarge,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Icon(FontAwesomeIcons.lightStar, size: 20, color: Theme.of(context).colorScheme.onSurface),
+                      gapHSmall,
+                      Text('Favoris', style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                  gapWLarge,
+                  Column(
+                    children: [
+                      Icon(FontAwesomeIcons.lightPencil, size: 20, color: Theme.of(context).colorScheme.onSurface),
+                      gapHSmall,
+                      Text('Modifier', style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                  gapWLarge,
+                  Column(
+                    children: [
+                      Icon(FontAwesomeIcons.lightTrash, size: 20, color: Theme.of(context).colorScheme.onSurface),
+                      gapHSmall,
+                      Text('Supprimer', style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                ]
+              ),
+              gapHSmall,
             ],
-          )
+          ),
+        ),
+        GridView.count(
+          crossAxisCount: 3,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: moments.skip(1).map((moment) => GestureDetector(
+            onTap: () => showMomentDialog(context, moment),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
+                image: DecorationImage(
+                  image: FileImage(File(moment.medias.first.path)),
+                  fit: BoxFit.cover,
+                )
+              ),
+            ),
+          )).toList(),
+        )
       ],
     );
   }

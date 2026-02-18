@@ -28,7 +28,8 @@ class CapsuleRepository {
 
     if(moments != null){
       for(String momentStr in moments){
-        _moments.value = [..._moments.value, Moment.fromJson(jsonDecode(momentStr))];
+        Capsule capsule = AppCapsules.capsules.firstWhere((c) => c.id == jsonDecode(momentStr)['capsule_id']);
+        _moments.value = [..._moments.value, Moment.fromJson(jsonDecode(momentStr), capsule)];
       }
 
       // sort moments by createdAt descending
@@ -66,23 +67,42 @@ class CapsuleRepository {
     _capsules.value = AppCapsules.capsules.take(2).toList();
   }
 
+  String getCurrentSeason() {
+    final month = DateTime.now().month;
+    if (month >= 3 && month <= 5) return 'season_spring';
+    if (month >= 6 && month <= 8) return 'season_summer';
+    if (month >= 9 && month <= 11) return 'season_autumn';
+    return 'season_winter';
+  }
+
   Future<void> selectCapsulesForCurrentPeriod() async {
     AppCapsules.capsules.shuffle();
     var randomCapsules = AppCapsules.capsules.toList();
 
-    var family_n_friend = ref.read(sharedPreferencesProvider).getString('family_n_friend') ?? 'family_all';
+    var familyAndFriend = ref.read(sharedPreferencesProvider).getString('family_n_friend') ?? 'family_all';
     var money = ref.read(sharedPreferencesProvider).getString('money') ?? 'money_all';
 
-    if(family_n_friend == 'family_near'){
-      randomCapsules.where((capsule) => capsule.tags.contains('family_far') || capsule.tags.contains('friend_only'));
-    } else if(family_n_friend == 'family_no'){
-      randomCapsules.where((capsule) => capsule.tags.contains('family_no'));
+    if(familyAndFriend == 'family_near'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('family_near') || capsule.tags.contains('family_all')).toList();
+    } else if(familyAndFriend == 'family_no'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('family_no') || capsule.tags.contains('family_all')).toList();
     }
 
-    if(money == 'money_little'){
-      randomCapsules.where((capsule) => capsule.tags.contains('money_little') || capsule.tags.contains('money_free'));
-    } else if(money == 'money_free'){
-      randomCapsules.where((capsule) => capsule.tags.contains('money_free'));
+    if(money == 'price_little'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('price_little') || capsule.tags.contains('price_free') || capsule.tags.contains('price_all')).toList();
+    } else if(money == 'price_free'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('price_free') || capsule.tags.contains('price_all')).toList();
+    }
+
+    var currentSeason = getCurrentSeason();
+    if(currentSeason == 'season_spring'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('season_spring') || capsule.tags.contains('season_all')).toList();
+    } else if(currentSeason == 'season_summer'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('season_summer') || capsule.tags.contains('season_all')).toList();
+    } else if(currentSeason == 'season_autumn'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('season_autumn') || capsule.tags.contains('season_all')).toList();
+    } else if(currentSeason == 'season_winter'){
+      randomCapsules = randomCapsules.where((capsule) => capsule.tags.contains('season_winter') || capsule.tags.contains('season_all')).toList();
     }
 
     randomCapsules = randomCapsules.take(3).toList();
@@ -141,6 +161,8 @@ class CapsuleRepository {
       }
       return c;
     }).toList();
+
+    ref.read(sharedPreferencesProvider).setStringList('selected_capsules', _capsules.value.map((c) => c.id.toString()).toList());
 
     List<String> moments = ref.read(sharedPreferencesProvider).getStringList('moments') ?? [];
     moments.add(jsonEncode(moment.toJson()));

@@ -54,26 +54,29 @@ class _ShowMomentState extends State<ShowMoment> {
               ),
               child: Column(
                 children: [
-                  Hero(
-                    tag: 'image_details_${widget.moment.createdAt}',
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      child: SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.4,
-                        width: double.infinity,
-                        child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: widget.moment.medias.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ImagesGalleryDetails(images: widget.moment.medias))),
-                              child: Image.file(
-                                File(widget.moment.medias[index].path),
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          },
-                        ),
+                  ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.4,
+                      width: double.infinity,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: widget.moment.medias.length,
+                        itemBuilder: (context, index) {
+                          final image = Image.file(
+                            File(widget.moment.medias[index].path),
+                            fit: BoxFit.cover,
+                          );
+                          return GestureDetector(
+                            onTap: () => Navigator.push(context, PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => ImagesGalleryDetails(images: widget.moment.medias, initialIndex: index),
+                              transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
+                            )),
+                            child: index == 0
+                              ? Hero(tag: widget.moment.medias.first.path, child: image)
+                              : image,
+                          );
+                        },
                       ),
                     ),
                   ),

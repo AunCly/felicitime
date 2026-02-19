@@ -10,17 +10,19 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class ImagesGalleryDetails extends StatefulWidget {
   const ImagesGalleryDetails({
     super.key,
-    required this.images
+    required this.images,
+    this.initialIndex = 0,
   });
 
   final List images;
+  final int initialIndex;
 
   @override
   State<ImagesGalleryDetails> createState() => _ImagesGalleryDetailsState();
 }
 
 class _ImagesGalleryDetailsState extends State<ImagesGalleryDetails> {
-  final PageController _pageController = PageController();
+  late final PageController _pageController = PageController(initialPage: widget.initialIndex);
 
   @override
   void dispose() {
@@ -40,7 +42,6 @@ class _ImagesGalleryDetailsState extends State<ImagesGalleryDetails> {
               return PhotoViewGalleryPageOptions(
                 imageProvider: FileImage(File(widget.images[index].path)),
                 initialScale: PhotoViewComputedScale.contained,
-                heroAttributes: PhotoViewHeroAttributes(tag: widget.images[index].path),
               );
             },
             itemCount: widget.images.length,

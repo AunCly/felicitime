@@ -49,7 +49,7 @@ class _LastMomentState extends State<LastMoment> {
                       children: [
                         Positioned.fill(
                           child: Hero(
-                            tag: 'image_details_${widget.moment.createdAt}',
+                            tag: widget.moment.medias.first.path,
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(10)),
                               child: Image.file(

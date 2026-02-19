@@ -50,8 +50,21 @@ class CapsuleRepository {
       return;
     }
 
+    // Collect validated capsule IDs from moments saved during the current period
+    Set<int> validatedCapsuleIds = {};
+    var selectionDate = ref.read(sharedPreferencesProvider).getString('selection_date');
+    if(selectionDate != null){
+      DateTime lastSelectionDate = DateTime.parse(selectionDate);
+      for(var moment in _moments.value){
+        if(moment.createdAt.isAfter(lastSelectionDate)){
+          validatedCapsuleIds.add(moment.capsule.id);
+        }
+      }
+    }
+
     for(Capsule capsule in AppCapsules.capsules){
       if(selectedCapsules.contains(capsule.id.toString())){
+        capsule.isValidated = validatedCapsuleIds.contains(capsule.id);
         _capsules.value = [..._capsules.value, capsule];
       }
     }

@@ -120,7 +120,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             children: [
               Row(
                 children: [
-                  Text('Hello, Auncly.', style: Theme.of(context).textTheme.headlineMedium),
+                  Row(
+                    children: [
+                      Text('Hello, ', style: Theme.of(context).textTheme.headlineMedium),
+                      Text('Auncly.', style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: AppColors.appPink, fontWeight: FontWeight.bold)),
+                    ]
+                  ),
                   Spacer(),
                   GestureDetector(
                     onTap: () => context.push('/settings'),

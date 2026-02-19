@@ -62,11 +62,63 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
   }
 
   void setRecurrence(String key, value) async {
-    print('value $value');
     final service = NotificationService();
     await ref.read(settingsControllerProvider.notifier).setSettings(key, value);
     await service.cancelCapsuleNotification();
     await service.scheduleCapsuleNotification();
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          title: Text('Confirmer la suppression', style: Theme.of(context).textTheme.titleLarge),
+          content: Text(
+            'Êtes-vous sûr de vouloir supprimer toutes vos capsules et moments ? Cette action est irréversible.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          actions: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Annuler', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary)),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await ref.read(capsuleRepositoryProvider).clearAllData();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      content: Text('Toutes les données ont été supprimées.', style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                  );
+                }
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(FontAwesomeIcons.trash, color: Theme.of(context).colorScheme.surface, size: 15),
+                  gapWNormal,
+                  Text('Supprimer', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.surface)),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -272,81 +324,9 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
                 ],
               ),
             ),
-            gapHNormal,
-            ElevatedButton(
-              onPressed: () async {
-                print('clear moments');
-                await ref.read(sharedPreferencesProvider).setStringList('moments', []);
-                SnackBar(
-                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                  content: Text('Tous les moments ont été supprimés.', style: Theme.of(context).textTheme.bodyMedium),
-                );
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(FontAwesomeIcons.trash, color: Theme.of(context).colorScheme.surface, size: 15),
-                  gapWNormal,
-                  Text('Supprimer les capsules', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.surface)),
-                ],
-              ),
-            )
           ]
         )
       )
-    );
-  }
-
-  void _showDeleteConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          title: Text('Confirmer la suppression', style: Theme.of(context).textTheme.titleLarge),
-          content: Text(
-            'Êtes-vous sûr de vouloir supprimer toutes vos capsules et moments ? Cette action est irréversible.',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          actions: [
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Theme.of(context).colorScheme.primary),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text('Annuler', style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.primary)),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await ref.read(capsuleRepositoryProvider).clearAllData();
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                      content: Text('Toutes les données ont été supprimées.', style: Theme.of(context).textTheme.bodyMedium),
-                    ),
-                  );
-                }
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(FontAwesomeIcons.trash, color: Theme.of(context).colorScheme.surface, size: 15),
-                  gapWNormal,
-                  Text('Supprimer', style: Theme.of(context).textTheme.titleSmall!.copyWith(color: Theme.of(context).colorScheme.surface)),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

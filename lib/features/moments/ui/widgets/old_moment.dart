@@ -53,18 +53,18 @@ class _OldMomentState extends State<OldMoment> {
                 ],
               )
             )),
-            gapHNormal,
+            gapHLarge,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
                   onTap: () => widget.favoriteAction(),
-                  child: Icon(widget.moment.isFavorite ? FontAwesomeIcons.solidStar : FontAwesomeIcons.lightStar, size: 20, color: AppColors.appYellow),
+                  child: Icon(widget.moment.isFavorite ? FontAwesomeIcons.solidStar : FontAwesomeIcons.lightStar, size: 16, color: AppColors.appYellow),
                 ),
-                Icon(FontAwesomeIcons.lightPencil, size: 20, color: AppColors.appPurple),
+                Icon(FontAwesomeIcons.lightPencil, size: 16, color: AppColors.appPurple),
                 GestureDetector(
                   onTap: () => widget.deleteAction(),
-                  child: Icon(FontAwesomeIcons.lightTrash, size: 20, color: AppColors.appOrange),
+                  child: Icon(FontAwesomeIcons.lightTrash, size: 16, color: AppColors.appOrange),
                 ),
               ]
             ),

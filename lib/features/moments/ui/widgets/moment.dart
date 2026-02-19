@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import '../../../../config/colors.dart';
 import '../../../../ui/widgets/button.dart';
 import 'last_moment.dart';
+import 'new_last_moment.dart';
 import 'old_moment.dart';
 
 class AppMoments extends ConsumerWidget {
@@ -90,7 +91,7 @@ class AppMoments extends ConsumerWidget {
       children: [
         Text('Mon dernier moment.', style: Theme.of(context).textTheme.titleMedium),
         gapHNormal,
-        LastMoment(
+        NewLastMoment(
           moment: moments.first,
           showAction: () => showMomentDialog(context, moments.first),
           deleteAction: () => deleteMoment(context, ref, moments.first),

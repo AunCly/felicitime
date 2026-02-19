@@ -35,24 +35,33 @@ class _OldMomentState extends State<OldMoment> {
           children: [
             Expanded(
               child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
-                image: DecorationImage(
-                  image: FileImage(File(widget.moment.medias.first.path)),
-                  fit: BoxFit.cover,
-                )
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: Hero(
+                        tag: 'image_details_${widget.moment.createdAt}',
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                          child: Image.file(
+                            File(widget.moment.medias.first.path),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: AppArrowGo(),
+                    ),
+                  ],
+                ),
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: AppArrowGo()
-                  )
-                ],
-              )
-            )),
+            ),
             gapHLarge,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

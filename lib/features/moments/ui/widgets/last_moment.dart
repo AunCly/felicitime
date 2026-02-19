@@ -36,35 +36,82 @@ class _LastMomentState extends State<LastMoment> {
         children: [
           GestureDetector(
             onTap: () => widget.showAction(),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
-                image: DecorationImage(
-                  image: FileImage(File(widget.moment.medias.first.path)),
-                  fit: BoxFit.cover,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 250,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Hero(
+                            tag: 'image_details_${widget.moment.createdAt}',
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(Radius.circular(10)),
+                              child: Image.file(
+                                File(widget.moment.medias.first.path),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                            top: 10,
+                            right: 10,
+                            child: AppArrowGo()
+                        ),
+                        Positioned(
+                            top: 10,
+                            left: 10,
+                            child: AppBadge(
+                              color: AppColors.appPink,
+                              text: DateFormat('dd/MM/yyyy').format(widget.moment.createdAt),
+                              icon: FontAwesomeIcons.lightCalendar,
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                gapWNormal,
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () => widget.favoriteAction(),
+                      child: Column(
+                        children: [
+                          Icon(widget.moment.isFavorite ? FontAwesomeIcons.solidStar : FontAwesomeIcons.lightStar, size: 20, color: AppColors.appYellow),
+                          gapHSmall,
+                          Text('Favoris', style: Theme.of(context).textTheme.bodySmall),
+                        ],
+                      ),
+                    ),
+                    gapHLarge,
+                    Column(
+                      children: [
+                        Icon(FontAwesomeIcons.lightPencil, size: 20, color: AppColors.appPurple),
+                        gapHSmall,
+                        Text('Modifier', style: Theme.of(context).textTheme.bodySmall),
+                      ],
+                    ),
+                    gapHLarge,
+                    GestureDetector(
+                      onTap: () => widget.deleteAction(),
+                      child: Column(
+                        children: [
+                          Icon(FontAwesomeIcons.lightTrash, size: 20, color: AppColors.appOrange),
+                          gapHSmall,
+                          Text('Supprimer', style: Theme.of(context).textTheme.bodySmall),
+                        ],
+                      ),
+                    ),
+                  ]
                 )
-              ),
-              height: 250,
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 10,
-                    right: 10,
-                    child: AppArrowGo()
-                  ),
-                  Positioned(
-                    top: 10,
-                    left: 10,
-                    child: AppBadge(
-                      color: AppColors.appPink,
-                      text: DateFormat('dd/MM/yyyy').format(widget.moment.createdAt),
-                      icon: FontAwesomeIcons.lightCalendar,
-                    )
-                  ),
-                ],
-              ),
+              ],
             ),
           ),
           Column(
@@ -79,42 +126,6 @@ class _LastMomentState extends State<LastMoment> {
               ),
             ]
           ),
-          gapHNormal,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () => widget.favoriteAction(),
-                child: Column(
-                  children: [
-                    Icon(widget.moment.isFavorite ? FontAwesomeIcons.solidStar : FontAwesomeIcons.lightStar, size: 20, color: AppColors.appYellow),
-                    gapHSmall,
-                    Text('Favoris', style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
-              ),
-              gapWLarge,
-              Column(
-                children: [
-                  Icon(FontAwesomeIcons.lightPencil, size: 20, color: AppColors.appPurple),
-                  gapHSmall,
-                  Text('Modifier', style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-              gapWLarge,
-              GestureDetector(
-                onTap: () => widget.deleteAction(),
-                child: Column(
-                  children: [
-                    Icon(FontAwesomeIcons.lightTrash, size: 20, color: AppColors.appOrange),
-                    gapHSmall,
-                    Text('Supprimer', style: Theme.of(context).textTheme.bodySmall),
-                  ],
-                ),
-              ),
-            ]
-          ),
-          gapHSmall,
         ],
       ),
     );

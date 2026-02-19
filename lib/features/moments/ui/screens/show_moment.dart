@@ -45,17 +45,17 @@ class _ShowMomentState extends State<ShowMoment> {
             gapHNormal,
             Text(widget.moment.capsule.title, style: Theme.of(context).textTheme.titleMedium,),
             gapHNormal,
-            Hero(
-              tag: 'image_details_${widget.moment.createdAt}',
-              child: Stack(
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
+                color: Theme.of(context).colorScheme.surface,
+              ),
+              child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
+                  Hero(
+                    tag: 'image_details_${widget.moment.createdAt}',
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       child: SizedBox(
@@ -77,25 +77,21 @@ class _ShowMomentState extends State<ShowMoment> {
                       ),
                     ),
                   ),
-                  if (widget.moment.medias.length > 1) Positioned(
-                    bottom: 15,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: SmoothPageIndicator(
-                        controller: _pageController,
-                        count: widget.moment.medias.length,
-                        effect: ExpandingDotsEffect(
-                          dotHeight: 8,
-                          dotWidth: 8,
-                          activeDotColor: Theme.of(context).colorScheme.primary,
-                          dotColor: Theme.of(context).colorScheme.surface.withOpacity(0.5),
-                        ),
+                  gapHNormal,
+                  Center(
+                    child: SmoothPageIndicator(
+                      controller: _pageController,
+                      count: widget.moment.medias.length,
+                      effect: ExpandingDotsEffect(
+                        dotHeight: 8,
+                        dotWidth: 8,
+                        activeDotColor: Theme.of(context).colorScheme.primary,
+                        dotColor: AppColors.appGrey,
                       ),
                     ),
-                  ),
+                  )
                 ],
-              )
+              ),
             ),
             gapHNormal,
             Container(

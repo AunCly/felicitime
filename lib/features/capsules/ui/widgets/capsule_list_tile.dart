@@ -103,7 +103,7 @@ class _CapsuleListTileState extends ConsumerState<CapsuleListTile> {
                 )
               ],
             ),
-            Positioned(
+            if(widget.canValidate == true) Positioned(
               top: 0,
               right: 0,
               child: AppArrowGo(),

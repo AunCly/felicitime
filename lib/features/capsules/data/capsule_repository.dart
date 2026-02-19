@@ -171,6 +171,21 @@ class CapsuleRepository {
     _moments.value.sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
+  Future<void> deleteMoment(Moment moment) async {
+
+    List<String> moments = ref.read(sharedPreferencesProvider).getStringList('moments') ?? [];
+
+    moments.removeWhere((momentStr) {
+      final decoded = jsonDecode(momentStr);
+      return decoded['created_at'] == moment.createdAt.toIso8601String() && decoded['capsule_id'] == moment.capsule.id;
+    });
+
+    ref.read(sharedPreferencesProvider).setStringList('moments', moments);
+
+    _moments.value = _moments.value.where((m) => !(m.createdAt == moment.createdAt && m.capsule.id == moment.capsule.id)).toList();
+
+  }
+
   Future<void> saveMood({required int moodValue, DateTime? date}) async {
 
     Mood mood = Mood(

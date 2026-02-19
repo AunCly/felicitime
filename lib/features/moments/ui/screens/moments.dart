@@ -29,8 +29,6 @@ class _MomentsScreenState extends ConsumerState<MomentsScreen> {
             BackHome(),
             Text('Moments.', style: Theme.of(context).textTheme.headlineLarge),
             gapHNormal,
-            Text('Mes moments enregistrés.', style: Theme.of(context).textTheme.titleMedium),
-            gapHNormal,
             AsyncValueWidget(
               value: moments,
               data: (value) {

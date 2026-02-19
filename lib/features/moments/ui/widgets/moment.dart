@@ -14,6 +14,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../config/colors.dart';
 import '../../../../ui/widgets/button.dart';
+import 'last_moment.dart';
+import 'old_moment.dart';
 
 class AppMoments extends ConsumerWidget {
   const AppMoments({super.key, required this.moments});
@@ -77,123 +79,37 @@ class AppMoments extends ConsumerWidget {
     );
   }
 
+  void toggleFavorite(WidgetRef ref, Moment moment) {
+    ref.read(capsuleRepositoryProvider).toggleFavorite(moment);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-      spacing: 20.0,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Column(
-            children: [
-              GestureDetector(
-                onTap: () => showMomentDialog(context, moments.first),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
-                    image: DecorationImage(
-                      image: FileImage(File(moments.first.medias.first.path)),
-                      fit: BoxFit.cover,
-                    )
-                  ),
-                  height: 250,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 10,
-                        left: 10,
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(25)),
-                            color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Theme.of(context).colorScheme.surface.withOpacity(0.7),
-                                ),
-                                child: Icon(FontAwesomeIcons.solidAngleLeft, size: 16, color: Theme.of(context).colorScheme.onSurface),
-                              ),
-                              gapWNormal,
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Moment du ', style: Theme.of(context).textTheme.bodyMedium),
-                                  Text(DateFormat('dd/MM/yyyy').format(moments.first.createdAt), style: Theme.of(context).textTheme.titleSmall),
-                                ]
-                              )
-                            ]
-                          ),
-                        )
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              gapHLarge,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Icon(FontAwesomeIcons.lightStar, size: 20, color: Theme.of(context).colorScheme.onSurface),
-                      gapHSmall,
-                      Text('Favoris', style: Theme.of(context).textTheme.bodySmall),
-                    ],
-                  ),
-                  gapWLarge,
-                  Column(
-                    children: [
-                      Icon(FontAwesomeIcons.lightPencil, size: 20, color: Theme.of(context).colorScheme.onSurface),
-                      gapHSmall,
-                      Text('Modifier', style: Theme.of(context).textTheme.bodySmall),
-                    ],
-                  ),
-                  gapWLarge,
-                  GestureDetector(
-                    onTap: () => deleteMoment(context, ref, moments.first),
-                    child: Column(
-                      children: [
-                        Icon(FontAwesomeIcons.lightTrash, size: 20, color: Theme.of(context).colorScheme.onSurface),
-                        gapHSmall,
-                        Text('Supprimer', style: Theme.of(context).textTheme.bodySmall),
-                      ],
-                    ),
-                  ),
-                ]
-              ),
-              gapHSmall,
-            ],
-          ),
+        Text('Mon dernier moment.', style: Theme.of(context).textTheme.titleMedium),
+        gapHNormal,
+        LastMoment(
+          moment: moments.first,
+          showAction: () => showMomentDialog(context, moments.first),
+          deleteAction: () => deleteMoment(context, ref, moments.first),
+          favoriteAction: () => toggleFavorite(ref, moments.first),
         ),
+        gapHNormal,
+        Text('Mes anciens moments.', style: Theme.of(context).textTheme.titleMedium),
+        gapHNormal,
         GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          children: moments.skip(1).map((moment) => GestureDetector(
-            onTap: () => showMomentDialog(context, moment),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
-                image: DecorationImage(
-                  image: FileImage(File(moment.medias.first.path)),
-                  fit: BoxFit.cover,
-                )
-              ),
-            ),
+          children: moments.skip(1).map((moment) => OldMoment(
+            moment: moment,
+            showAction: () => showMomentDialog(context, moment),
+            deleteAction: () => deleteMoment(context, ref, moment),
+            favoriteAction: () => toggleFavorite(ref, moment),
           )).toList(),
         )
       ],

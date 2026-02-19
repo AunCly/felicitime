@@ -3,6 +3,10 @@ import 'package:felicitime/features/capsules/model/mood.dart';
 import 'package:felicitime/features/moods/ui/widgets/month_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../config/colors.dart';
+import '../../../../ui/widgets/badge.dart';
 
 class MoodGrid extends ConsumerStatefulWidget {
   const MoodGrid({super.key, required this.moods});
@@ -65,7 +69,11 @@ class _MoodGridState extends ConsumerState<MoodGrid> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${monthNames[month.month]} ${month.year}', style: Theme.of(context).textTheme.titleMedium),
+                  AppBadge(
+                    color: AppColors.appPink,
+                    text: "${monthNames[month.month]} ${month.year}",
+                    icon: FontAwesomeIcons.lightCalendar,
+                  ),
                   gapHNormal,
                   MonthGrid(month: month, moods: widget.moods),
                 ],

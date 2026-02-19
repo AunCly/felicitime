@@ -197,6 +197,33 @@ class CapsuleRepository {
 
     _moments.value = _moments.value.where((m) => !(m.createdAt == moment.createdAt && m.capsule.id == moment.capsule.id)).toList();
 
+    // Reset capsule validation status
+    _capsules.value = _capsules.value.map((c) {
+      if (c.id == moment.capsule.id) {
+        c.isValidated = false;
+      }
+      return c;
+    }).toList();
+
+  }
+
+  Future<void> toggleFavorite(Moment moment) async {
+    moment.isFavorite = !moment.isFavorite;
+
+    // Update in SharedPreferences
+    List<String> moments = ref.read(sharedPreferencesProvider).getStringList('moments') ?? [];
+    moments = moments.map((momentStr) {
+      final decoded = jsonDecode(momentStr);
+      if (decoded['created_at'] == moment.createdAt.toIso8601String() && decoded['capsule_id'] == moment.capsule.id) {
+        decoded['is_favorite'] = moment.isFavorite;
+        return jsonEncode(decoded);
+      }
+      return momentStr;
+    }).toList();
+    ref.read(sharedPreferencesProvider).setStringList('moments', moments);
+
+    // Trigger stream update
+    _moments.value = [..._moments.value];
   }
 
   Future<void> saveMood({required int moodValue, DateTime? date}) async {

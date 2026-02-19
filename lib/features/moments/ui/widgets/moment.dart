@@ -4,12 +4,12 @@ import 'dart:ui';
 import 'package:felicitime/config/theme.dart';
 import 'package:felicitime/features/capsules/data/capsule_repository.dart';
 import 'package:felicitime/features/capsules/model/moment.dart';
-import 'package:felicitime/features/moments/ui/screens/show_moment.dart';
 import 'package:felicitime/ui/widgets/dialog.dart';
 import 'package:felicitime/ui/widgets/images_gallery_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../config/colors.dart';
@@ -23,25 +23,8 @@ class AppMoments extends ConsumerWidget {
 
   final List<Moment> moments;
 
-  showMomentDialog(BuildContext context, Moment moment){
-    showGeneralDialog(
-      transitionDuration: const Duration(milliseconds: 400),
-      context: context,
-      pageBuilder: (context, anim1, anim2) {
-        return Dialog.fullscreen(
-          child: AppDialog(
-            title: 'Moment',
-            content: ShowMoment(moment: moment)
-          ),
-        );
-      },
-      transitionBuilder: (context, anim1, anim2, child) {
-        return SlideTransition(
-          position: Tween(begin: const Offset(0, 1), end: const Offset(0, 0)).animate(anim1),
-          child: child,
-        );
-      },
-    );
+  void showMoment(BuildContext context, Moment moment) {
+    context.push('/moments/show', extra: moment);
   }
 
   void deleteMoment(BuildContext context, WidgetRef ref, Moment moment) {
@@ -93,7 +76,7 @@ class AppMoments extends ConsumerWidget {
         gapHNormal,
         NewLastMoment(
           moment: moments.first,
-          showAction: () => showMomentDialog(context, moments.first),
+          showAction: () => showMoment(context, moments.first),
           deleteAction: () => deleteMoment(context, ref, moments.first),
           favoriteAction: () => toggleFavorite(ref, moments.first),
         ),
@@ -108,7 +91,7 @@ class AppMoments extends ConsumerWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: moments.skip(1).map((moment) => OldMoment(
             moment: moment,
-            showAction: () => showMomentDialog(context, moment),
+            showAction: () => showMoment(context, moment),
             deleteAction: () => deleteMoment(context, ref, moment),
             favoriteAction: () => toggleFavorite(ref, moment),
           )).toList(),

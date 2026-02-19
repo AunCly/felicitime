@@ -5,4 +5,5 @@ class Routes {
   static const capsules = '/capsules';
   static const moods = '/moods';
   static const moments = '/moments';
+  static const showMoment = '/moments/show';
 }

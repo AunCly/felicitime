@@ -1,5 +1,7 @@
+import 'package:felicitime/features/capsules/model/moment.dart';
 import 'package:felicitime/features/capsules/ui/screens/capsules.dart';
 import 'package:felicitime/features/moments/ui/screens/moments.dart';
+import 'package:felicitime/features/moments/ui/screens/show_moment.dart';
 import 'package:felicitime/features/moods/ui/screens/moods.dart';
 import 'package:felicitime/features/settings/ui/screens/settings.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,31 +26,38 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: Routes.home,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: DashboardScreen());
+          return const BaseScreen(screen: SafeArea(child: DashboardScreen()));
         },
       ),
       GoRoute(
         path: Routes.capsules,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: CapsulesScreen());
+          return const BaseScreen(screen: SafeArea(child: CapsulesScreen()));
         },
       ),
       GoRoute(
         path: Routes.moods,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: MoodsScreen());
+          return const BaseScreen(screen: SafeArea(child: MoodsScreen()));
         },
       ),
       GoRoute(
         path: Routes.moments,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: MomentsScreen());
+          return const BaseScreen(screen: SafeArea(child: MomentsScreen()));
+        },
+      ),
+      GoRoute(
+        path: Routes.showMoment,
+        builder: (BuildContext context, GoRouterState state) {
+          final moment = state.extra as Moment;
+          return BaseScreen(screen: ShowMoment(moment: moment));
         },
       ),
       GoRoute(
         path: Routes.settings,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: SettingsScreen());
+          return const BaseScreen(screen: SafeArea(child: SettingsScreen()));
         },
       ),
     ],

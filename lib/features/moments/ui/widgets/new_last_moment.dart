@@ -39,35 +39,39 @@ class _NewLastMomentState extends State<NewLastMoment> {
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
-                      image: DecorationImage(
-                        image: FileImage(File(widget.moment.medias.first.path)),
-                        fit: BoxFit.cover,
-                      )
+                  child: Hero(
+                    tag: 'image_details_${widget.moment.createdAt}',
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
+                        image: DecorationImage(
+                          image: FileImage(File(widget.moment.medias.first.path)),
+                          fit: BoxFit.cover,
+                        )
+                      ),
+                      height: 250,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              top: 10,
+                              right: 10,
+                              child: AppArrowGo()
+                          ),
+                          Positioned(
+                              top: 10,
+                              left: 10,
+                              child: AppBadge(
+                                color: AppColors.appPink,
+                                text: DateFormat('dd/MM/yyyy').format(widget.moment.createdAt),
+                                icon: FontAwesomeIcons.lightCalendar,
+                              )
+                          ),
+                        ],
+                      ),
                     ),
-                    height: 250,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                          top: 10,
-                          right: 10,
-                          child: AppArrowGo()
-                      ),
-                      Positioned(
-                          top: 10,
-                          left: 10,
-                          child: AppBadge(
-                            color: AppColors.appPink,
-                            text: DateFormat('dd/MM/yyyy').format(widget.moment.createdAt),
-                            icon: FontAwesomeIcons.lightCalendar,
-                          )
-                      ),
-                    ],
                   ),
-                )),
+                ),
                 gapWNormal,
                 Column(
                   children: [

@@ -26,25 +26,25 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: Routes.home,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: SafeArea(child: DashboardScreen()));
+          return const BaseScreen(screen: DashboardScreen());
         },
       ),
       GoRoute(
         path: Routes.capsules,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: SafeArea(child: CapsulesScreen()));
+          return const BaseScreen(screen: CapsulesScreen());
         },
       ),
       GoRoute(
         path: Routes.moods,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: SafeArea(child: MoodsScreen()));
+          return const BaseScreen(screen: MoodsScreen());
         },
       ),
       GoRoute(
         path: Routes.moments,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: SafeArea(child: MomentsScreen()));
+          return const BaseScreen(screen: MomentsScreen());
         },
       ),
       GoRoute(
@@ -57,7 +57,7 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: Routes.settings,
         builder: (BuildContext context, GoRouterState state) {
-          return const BaseScreen(screen: SafeArea(child: SettingsScreen()));
+          return const BaseScreen(screen: SettingsScreen());
         },
       ),
     ],

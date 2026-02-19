@@ -1,92 +1,141 @@
 import 'dart:io';
 
+import 'package:felicitime/config/colors.dart';
 import 'package:felicitime/config/theme.dart';
 import 'package:felicitime/features/capsules/model/moment.dart';
 import 'package:felicitime/features/capsules/ui/widgets/capsule_list_tile.dart';
-import 'package:felicitime/ui/widgets/arrow_go.dart';
 import 'package:felicitime/ui/widgets/back_home.dart';
 import 'package:felicitime/ui/widgets/images_gallery_details.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class ShowMoment extends StatelessWidget {
+import '../../../../ui/widgets/badge.dart';
+
+class ShowMoment extends StatefulWidget {
   const ShowMoment({super.key, required this.moment});
 
   final Moment moment;
 
   @override
+  State<ShowMoment> createState() => _ShowMomentState();
+}
+
+class _ShowMomentState extends State<ShowMoment> {
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Hero(
-            tag: 'image_details_${moment.createdAt}',
-            child: Stack(
-              children: [
-                SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.4,
-                  width: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.file(
-                      File(moment.medias.first.path),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 60,
-                  left: 10,
-                  child: BackHome(),
-                ),
-                if(moment.medias.length > 1) Positioned(
-                  bottom: 10,
-                  right: 10,
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
+      child: Container(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            BackHome(),
+            Text('Moments.', style: Theme.of(context).textTheme.headlineLarge),
+            gapHNormal,
+            Text(widget.moment.capsule.title, style: Theme.of(context).textTheme.titleMedium,),
+            gapHNormal,
+            Hero(
+              tag: 'image_details_${widget.moment.createdAt}',
+              child: Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      border: Border.all(color: AppColors.appGrey.withValues(alpha: 0.3)),
                       color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Text('1/${moment.medias.length}', style: Theme.of(context).textTheme.bodySmall),
-                  ),
-                )
-              ],
-            )
-          ),
-          Container(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              children: [
-                Text('La capsule associée à ce moment :', style: Theme.of(context).textTheme.titleMedium,),
-                gapHNormal,
-                CapsuleListTile(capsule: moment.capsule, canValidate: false,),
-                gapHNormal,
-                Text('Votre moment enregistré le ${DateFormat('dd/MM/yyyy').format(moment.createdAt)}', style: Theme.of(context).textTheme.titleMedium,),
-                gapHNormal,
-                if(moment.comment != '') Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    gapHNormal,
-                    Text('Votre commentaire :', style: Theme.of(context).textTheme.titleMedium,),
-                    gapHNormal,
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(10),
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.4,
+                        width: double.infinity,
+                        child: PageView.builder(
+                          controller: _pageController,
+                          itemCount: widget.moment.medias.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ImagesGalleryDetails(images: widget.moment.medias))),
+                              child: Image.file(
+                                File(widget.moment.medias[index].path),
+                                fit: BoxFit.cover,
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                      child: Text(moment.comment!, style: Theme.of(context).textTheme.bodyMedium)
                     ),
-                  ]
-                )
+                  ),
+                  if (widget.moment.medias.length > 1) Positioned(
+                    bottom: 15,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: SmoothPageIndicator(
+                        controller: _pageController,
+                        count: widget.moment.medias.length,
+                        effect: ExpandingDotsEffect(
+                          dotHeight: 8,
+                          dotWidth: 8,
+                          activeDotColor: Theme.of(context).colorScheme.primary,
+                          dotColor: Theme.of(context).colorScheme.surface.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ),
+            gapHNormal,
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children : [
+                  AppBadge(
+                    color: AppColors.appPink,
+                    text: DateFormat('dd/MM/yyyy').format(widget.moment.createdAt),
+                    icon: FontAwesomeIcons.lightCalendar,
+                  ),
+                  gapHNormal,
+                  Text(widget.moment.capsule.description, style: Theme.of(context).textTheme.bodyMedium),
+                ]
+              )
+            ),
+            gapHNormal,
+            if(widget.moment.comment != '') Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Vous avez ajouté :', style: Theme.of(context).textTheme.titleMedium,),
+                gapHNormal,
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(widget.moment.comment!, style: Theme.of(context).textTheme.bodyMedium)
+                ),
               ]
             )
-          )
-        ],
+          ]
+        )
       )
     );
   }

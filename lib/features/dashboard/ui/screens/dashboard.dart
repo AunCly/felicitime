@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../config/colors.dart';
 import '../../../../ui/widgets/async_value_widget.dart';
+import '../../../../ui/widgets/gradient_text.dart';
 import '../../../capsules/data/capsule_repository.dart';
 import '../../../capsules/model/mood.dart';
 import '../../../capsules/ui/controllers/save_mood_controller.dart';
@@ -123,7 +124,11 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   Row(
                     children: [
                       Text('Hello, ', style: Theme.of(context).textTheme.headlineMedium),
-                      Text('Auncly.', style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: AppColors.appPink, fontWeight: FontWeight.bold)),
+                      AppGradientText(
+                        text: 'Auncly.',
+                        textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+                        gradientColors: [AppColors.appYellow, AppColors.appPink, AppColors.appPurple],
+                      ),
                     ]
                   ),
                   Spacer(),

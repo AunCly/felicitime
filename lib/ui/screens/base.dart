@@ -30,7 +30,7 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
     AsyncValue me = ref.watch(getMeStreamProvider);
 
     return Scaffold(
-      body: _EagerAuthInitialization(child: widget.screen),
+      body: SafeArea(child: _EagerAuthInitialization(child: widget.screen)),
     );
   }
 }

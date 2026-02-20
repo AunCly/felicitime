@@ -18,6 +18,10 @@ class AppMoments extends ConsumerWidget {
     context.push('/moments/show', extra: moment);
   }
 
+  void editMoment(BuildContext context, Moment moment) {
+    context.push('/moments/edit', extra: moment);
+  }
+
   void deleteMoment(BuildContext context, WidgetRef ref, Moment moment) {
     showDialog(
       context: context,
@@ -68,6 +72,7 @@ class AppMoments extends ConsumerWidget {
         LastMoment(
           moment: moments.first,
           showAction: () => showMoment(context, moments.first),
+          editAction: () => editMoment(context, moments.first),
           deleteAction: () => deleteMoment(context, ref, moments.first),
           favoriteAction: () => toggleFavorite(ref, moments.first),
         ),
@@ -83,6 +88,7 @@ class AppMoments extends ConsumerWidget {
           children: moments.skip(1).map((moment) => OldMoment(
             moment: moment,
             showAction: () => showMoment(context, moment),
+            editAction: () => editMoment(context, moment),
             deleteAction: () => deleteMoment(context, ref, moment),
             favoriteAction: () => toggleFavorite(ref, moment),
           )).toList(),

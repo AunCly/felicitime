@@ -1,6 +1,7 @@
 import 'package:felicitime/features/capsules/model/moment.dart';
 import 'package:felicitime/features/capsules/ui/screens/capsules.dart';
 import 'package:felicitime/features/moments/ui/screens/moments.dart';
+import 'package:felicitime/features/moments/ui/screens/edit_moment.dart';
 import 'package:felicitime/features/moments/ui/screens/show_moment.dart';
 import 'package:felicitime/features/moods/ui/screens/moods.dart';
 import 'package:felicitime/features/settings/ui/screens/settings.dart';
@@ -52,6 +53,13 @@ GoRouter router(Ref ref) {
         builder: (BuildContext context, GoRouterState state) {
           final moment = state.extra as Moment;
           return BaseScreen(screen: ShowMoment(moment: moment));
+        },
+      ),
+      GoRoute(
+        path: Routes.editMoment,
+        builder: (BuildContext context, GoRouterState state) {
+          final moment = state.extra as Moment;
+          return BaseScreen(screen: EditMoment(moment: moment));
         },
       ),
       GoRoute(

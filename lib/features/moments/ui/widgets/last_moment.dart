@@ -11,10 +11,11 @@ import '../../../../ui/widgets/badge.dart';
 import '../../../capsules/model/moment.dart';
 
 class LastMoment extends StatefulWidget {
-  const LastMoment({super.key, required this.moment, required this.deleteAction, required this.showAction, required this.favoriteAction});
+  const LastMoment({super.key, required this.moment, required this.deleteAction, required this.showAction, required this.editAction, required this.favoriteAction});
 
   final Moment moment;
   final Function showAction;
+  final Function editAction;
   final Function deleteAction;
   final Function favoriteAction;
 
@@ -91,12 +92,15 @@ class _LastMomentState extends State<LastMoment> {
                       ),
                     ),
                     gapHLarge,
-                    Column(
-                      children: [
-                        Icon(FontAwesomeIcons.lightPencil, size: 20, color: AppColors.appPurple),
-                        gapHSmall,
-                        Text('Modifier', style: Theme.of(context).textTheme.bodySmall),
-                      ],
+                    GestureDetector(
+                      onTap: () => widget.editAction(),
+                      child: Column(
+                        children: [
+                          Icon(FontAwesomeIcons.lightPencil, size: 20, color: AppColors.appPurple),
+                          gapHSmall,
+                          Text('Modifier', style: Theme.of(context).textTheme.bodySmall),
+                        ],
+                      ),
                     ),
                     gapHLarge,
                     GestureDetector(

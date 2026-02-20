@@ -207,6 +207,27 @@ class CapsuleRepository {
 
   }
 
+  Future<void> updateMoment({required Moment moment, required Map data}) async {
+    moment.medias = data['medias'];
+    moment.comment = data['comment'] ?? '';
+    if (data['date'] != null) {
+      moment.createdAt = DateTime.parse(data['date']);
+    }
+
+    // Update in SharedPreferences
+    List<String> moments = ref.read(sharedPreferencesProvider).getStringList('moments') ?? [];
+    moments = moments.map((momentStr) {
+      final decoded = jsonDecode(momentStr);
+      if (decoded['created_at'] == moment.createdAt.toIso8601String() && decoded['capsule_id'] == moment.capsule.id) {
+        return jsonEncode(moment.toJson());
+      }
+      return momentStr;
+    }).toList();
+    ref.read(sharedPreferencesProvider).setStringList('moments', moments);
+
+    _moments.value = [..._moments.value];
+  }
+
   Future<void> toggleFavorite(Moment moment) async {
     moment.isFavorite = !moment.isFavorite;
 

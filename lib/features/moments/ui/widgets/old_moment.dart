@@ -9,10 +9,11 @@ import '../../../../config/theme.dart';
 import '../../../capsules/model/moment.dart';
 
 class OldMoment extends StatefulWidget {
-  const OldMoment({super.key, required this.moment, required this.showAction, required this.deleteAction, required this.favoriteAction});
+  const OldMoment({super.key, required this.moment, required this.showAction, required this.editAction, required this.deleteAction, required this.favoriteAction});
 
   final Moment moment;
   final Function showAction;
+  final Function editAction;
   final Function deleteAction;
   final Function favoriteAction;
 
@@ -70,7 +71,10 @@ class _OldMomentState extends State<OldMoment> {
                   onTap: () => widget.favoriteAction(),
                   child: Icon(widget.moment.isFavorite ? FontAwesomeIcons.solidStar : FontAwesomeIcons.lightStar, size: 16, color: AppColors.appYellow),
                 ),
-                Icon(FontAwesomeIcons.lightPencil, size: 16, color: AppColors.appPurple),
+                GestureDetector(
+                  onTap: () => widget.editAction(),
+                  child: Icon(FontAwesomeIcons.lightPencil, size: 16, color: AppColors.appPurple),
+                ),
                 GestureDetector(
                   onTap: () => widget.deleteAction(),
                   child: Icon(FontAwesomeIcons.lightTrash, size: 16, color: AppColors.appOrange),

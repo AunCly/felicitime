@@ -73,7 +73,19 @@ class _ShowMomentState extends State<ShowMoment> {
                               transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
                             )),
                             child: index == 0
-                              ? Hero(tag: widget.moment.medias.first.path, child: image)
+                              ? Hero(
+                                  tag: widget.moment.medias.first.path,
+                                  flightShuttleBuilder: (flightContext, animation, direction, fromContext, toContext) {
+                                    return ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.file(
+                                        File(widget.moment.medias.first.path),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  },
+                                  child: image,
+                                )
                               : image,
                           );
                         },

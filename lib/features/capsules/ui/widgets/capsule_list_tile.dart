@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../config/colors.dart';
 import '../../../../ui/widgets/arrow_go.dart';
 import '../../../../ui/widgets/badge.dart';
 
@@ -50,8 +51,22 @@ class _CapsuleListTileState extends ConsumerState<CapsuleListTile> {
   @override
   Widget build(BuildContext context) {
 
+    Map<String, String> tagTitles = {
+      'price_all': 'Gratuit',
+      'price_little': 'Quelques euros',
+      'price_high': 'Payant',
+      'family_all': 'Seul, en famille ou entre amis',
+      'family_no': 'Seul',
+      'family_yes': 'En famille ou entre amis',
+      'season_all': 'Toute l\'année',
+      'season_spring': 'Printemps',
+      'season_summer': 'Été',
+      'season_autumn': 'Automne',
+      'season_winter': 'Hiver',
+    };
+
     return GestureDetector(
-      onTap: () => showValidationDialog(),
+      onTap: () => (!widget.capsule.isValidated && widget.canValidate == true) ? showValidationDialog() : null,
       child: Container(
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
@@ -81,29 +96,17 @@ class _CapsuleListTileState extends ConsumerState<CapsuleListTile> {
                   spacing: 5,
                   runSpacing: 5,
                   children: [
-                    if(widget.capsule.tags.contains('price_all')) AppBadge(
-                      icon: FontAwesomeIcons.lightCoins,
-                      text:  'Gratuit',
-                      color: Theme.of(context).colorScheme.primary,
-                      textColor: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    if(widget.capsule.tags.contains('family_all')) AppBadge(
-                      icon: FontAwesomeIcons.lightUsers,
-                      text: 'Seul, en famille ou entre amis',
-                      color: Theme.of(context).colorScheme.primary,
-                      textColor: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                    if(widget.capsule.tags.contains('season_all')) AppBadge(
-                      icon: FontAwesomeIcons.lightWheat,
-                      text:  'Toute l\'annnée',
-                      color: Theme.of(context).colorScheme.primary,
+                    for(String tag in widget.capsule.tags) AppBadge(
+                      icon: tag.contains('price_') ? FontAwesomeIcons.solidCoins : (tag.contains('family_') ? FontAwesomeIcons.solidUsers : (tag.contains('season_') ? FontAwesomeIcons.solidWheat : FontAwesomeIcons.solidCoins)),
+                      text: tagTitles[tag] ?? tag,
+                      color: tag.contains('price_') ? AppColors.appYellow : (tag.contains('family_') ? AppColors.appPink : (tag.contains('season_') ? AppColors.appOrange : AppColors.appPurple)),
                       textColor: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ]
                 )
               ],
             ),
-            if(widget.canValidate == true) Positioned(
+            if(!widget.capsule.isValidated && widget.canValidate == true) Positioned(
               top: 0,
               right: 0,
               child: AppArrowGo(),

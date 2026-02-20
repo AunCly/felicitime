@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:felicitime/ui/widgets/arrow_go.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:felicitime/config/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:ui';
 
 import '../../../../config/colors.dart';
 import '../../../../ui/widgets/async_value_widget.dart';
@@ -233,7 +232,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             Positioned(
                               top: 20,
                               left: 20,
-                              child: Text('Capsules.', style: Theme.of(context).textTheme.headlineLarge)
+                              child: Text('Capsules.', style: Theme.of(context).textTheme.headlineLarge),
                             ),
                             Positioned(
                               top: 10,
@@ -273,7 +272,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                             Positioned(
                               top: 20,
                               left: 20,
-                              child: Text('Moments.', style: Theme.of(context).textTheme.headlineLarge)
+                              child: Text('Moments.', style: Theme.of(context).textTheme.headlineLarge),
                             ),
                             Positioned(
                               top: 10,

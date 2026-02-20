@@ -72,7 +72,8 @@ class _MoodGridState extends ConsumerState<MoodGrid> {
                   AppBadge(
                     color: AppColors.appPink,
                     text: "${monthNames[month.month]} ${month.year}",
-                    icon: FontAwesomeIcons.lightCalendar,
+                    textColor: AppColors.appWhite,
+                    icon: FontAwesomeIcons.solidCalendar,
                   ),
                   gapHNormal,
                   MonthGrid(month: month, moods: widget.moods),

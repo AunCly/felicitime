@@ -23,7 +23,7 @@ class AppBadge extends StatelessWidget {
         children: [
           Icon(icon, size: 12, color: textColor),
           const SizedBox(width: 5),
-          Text(text, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor))
+          Text(text, style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold, color: textColor))
         ],
       ),
     );

@@ -1,20 +1,11 @@
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:felicitime/config/theme.dart';
 import 'package:felicitime/features/capsules/data/capsule_repository.dart';
 import 'package:felicitime/features/capsules/model/moment.dart';
-import 'package:felicitime/ui/widgets/dialog.dart';
-import 'package:felicitime/ui/widgets/images_gallery_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-
-import '../../../../config/colors.dart';
 import '../../../../ui/widgets/button.dart';
-import 'last_moment.dart';
 import 'last_moment.dart';
 import 'old_moment.dart';
 

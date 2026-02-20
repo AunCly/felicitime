@@ -61,12 +61,13 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(color: AppColors.appPurple, width: 2),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: const BorderSide(color: AppColors.appPink, width: 2),
+        borderSide: const BorderSide(color: AppColors.appPurple, width: 2),
       ),
       filled: true,
       fillColor: AppColors.appWhite,
@@ -103,13 +104,13 @@ class AppTheme {
       displayColor: AppTheme.appWhite,
     ),
     chipTheme: ChipThemeData(
-        backgroundColor: AppTheme.appBlack,
-        selectedColor: const Color(0xFF71a785),
-        secondarySelectedColor: const Color(0xFF71a785),
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: Color(0xFF71a785), width: 2),
-        )
+      backgroundColor: AppTheme.appBlack,
+      selectedColor: const Color(0xFF71a785),
+      secondarySelectedColor: const Color(0xFF71a785),
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(color: Color(0xFF71a785), width: 2),
+      )
     ),
   );
 }

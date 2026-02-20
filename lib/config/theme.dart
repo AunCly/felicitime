@@ -60,6 +60,18 @@ class AppTheme {
         ),
       ),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(color: AppColors.appPink, width: 2),
+      ),
+      filled: true,
+      fillColor: AppColors.appWhite,
+      hintStyle: const TextStyle(color: AppColors.appPink, fontSize: 15, fontWeight: FontWeight.w500),
+    )
   );
 
   static final dark = ThemeData(

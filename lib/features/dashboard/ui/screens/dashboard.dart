@@ -13,6 +13,7 @@ import '../../../../ui/widgets/gradient_text.dart';
 import '../../../capsules/data/capsule_repository.dart';
 import '../../../capsules/model/mood.dart';
 import '../../../capsules/ui/controllers/save_mood_controller.dart';
+import '../../../user/data/user_repository.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -121,17 +122,22 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             children: [
               Row(
                 children: [
-                  Row(
-                    children: [
-                      Text('Hello, ', style: Theme.of(context).textTheme.headlineMedium),
-                      AppGradientText(
-                        text: 'Auncly.',
-                        textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
-                        gradientColors: [AppColors.appYellow, AppColors.appPink, AppColors.appPurple],
-                      ),
-                    ]
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text('Hello, ', style: Theme.of(context).textTheme.headlineMedium),
+                        Flexible(
+                          child: AppGradientText(
+                            text: '${ref.watch(settingsStreamProvider).valueOrNull?['name'] ?? ''}.',
+                            textStyle: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.bold),
+                            gradientColors: [AppColors.appYellow, AppColors.appPink, AppColors.appPurple],
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ]
+                    ),
                   ),
-                  Spacer(),
+                  gapWNormal,
                   GestureDetector(
                     onTap: () => context.push('/settings'),
                     child: Container(

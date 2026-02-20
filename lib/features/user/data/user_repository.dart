@@ -18,6 +18,7 @@ class UserRepository {
 
   UserRepository({required this.ref}){
     Map settings = {
+      'name': ref.read(sharedPreferencesProvider).getString('name') ?? '',
       'family_n_friend': ref.read(sharedPreferencesProvider).getString('family_n_friend') ?? '',
       'money': ref.read(sharedPreferencesProvider).getString('money') ?? '',
       'notification': ref.read(sharedPreferencesProvider).getString('notification') ?? 'off',

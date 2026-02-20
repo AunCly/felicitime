@@ -137,6 +137,37 @@ class _SettingsScreensState extends ConsumerState<SettingsScreen> {
             gapHNormal,
             Text('Paramètres personnels', style: Theme.of(context).textTheme.titleMedium),
             gapHNormal,
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Pseudo ', style: Theme.of(context).textTheme.titleMedium),
+                  gapHNormal,
+                  AppInfoMessage(message: 'Comment souhaitez vous être appellé ?',),
+                  gapHNormal,
+                  Column(
+                    children: [
+                      TextFormField(
+                        initialValue: ref.read(sharedPreferencesProvider).getString('name') ?? '',
+                        decoration: InputDecoration(
+                          labelText: 'Nom',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onChanged: (value) => setSetting('name', value),
+                      )
+                    ]
+                  ),
+                ]
+              )
+            ),
+            gapHNormal,
             AsyncValueWidget(
               value: settings,
               data: (value) => Container(
